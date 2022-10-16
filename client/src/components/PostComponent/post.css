@@ -1,0 +1,19 @@
+#dark-overlay {
+	background: rgb(255, 115, 115);
+	background: linear-gradient(
+		180deg,
+		rgba(255, 115, 115, 0) 0%,
+		rgba(22, 22, 22, 0.4) 50%,
+		rgba(22, 22, 22, 0.7) 95%
+	);
+	animation: darkOverlayAnimation 0.5s ease-in 0s 1;
+}
+
+@keyframes darkOverlayAnimation {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 100%;
+	}
+}
