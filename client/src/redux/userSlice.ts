@@ -4,15 +4,25 @@ import type { RootState } from "./store";
 import { User } from "../types";
 
 // Define the initial state using that type
-const initialState: User | null = null;
+interface UserState {
+	user: User | null;
+}
+
+const initialState: UserState = {
+	user: null,
+};
 
 export const counterSlice = createSlice({
 	name: "user",
 	initialState,
-	reducers: {},
+	reducers: {
+		setUser: (state, action: PayloadAction<User>) => {
+			state.user = action.payload;
+		},
+	},
 });
 
-// export const { increment, decrement, incrementByAmount } = counterSlice.actions;
+export const { setUser } = counterSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectCount = (state: RootState) => state.counter.value;
