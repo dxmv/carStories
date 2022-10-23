@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { AiOutlineHeart, AiOutlineComment } from "react-icons/ai";
+import { Link } from "react-router-dom";
 import "./post.css";
 
 export default function Post() {
 	const [visible, setVisible] = useState<boolean>(false);
 
-	const handleVisible = () => {
-		setVisible(prev => !prev);
+	const handleEnter = () => {
+		setVisible(true);
+	};
+
+	const handleLeave = () => {
+		setVisible(false);
 	};
 
 	return (
@@ -15,10 +20,12 @@ export default function Post() {
 				<span className="rounded-full bg-black w-8 h-8 mr-2"></span>
 				<p className="text-lg">user</p>
 			</div>
-			<div
+			<Link
 				style={{ height: "90%" }}
 				className="relative"
-				onClick={handleVisible}
+				onMouseEnter={handleEnter}
+				onMouseLeave={handleLeave}
+				to="post/1"
 			>
 				<img
 					src="https://economictimes.indiatimes.com/thumb/msid-94422013,width-736,height-736,resizemode-4,imgsize-24360/andrew-tate-.jpg?from=mdr"
@@ -35,7 +42,7 @@ export default function Post() {
 						</p>
 					</div>
 				)}
-			</div>
+			</Link>
 			<div className="flex items-center p-3">
 				<div className="mr-4 flex flex-col items-center">
 					<AiOutlineHeart size={36} />1
