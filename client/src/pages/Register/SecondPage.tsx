@@ -1,11 +1,16 @@
 import React from "react";
+import { RegisterState } from "./registerTypes";
 
 export default function SecondPage({
 	nextPage,
 	prevPage,
+	user,
+	setUser,
 }: {
 	nextPage: () => void;
 	prevPage: () => void;
+	user: RegisterState;
+	setUser: React.Dispatch<React.SetStateAction<RegisterState>>;
 }) {
 	return (
 		<>

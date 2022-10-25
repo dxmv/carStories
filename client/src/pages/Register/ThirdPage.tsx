@@ -1,7 +1,16 @@
 import React from "react";
 import { AiFillCamera, AiFillPicture } from "react-icons/ai";
+import { RegisterState } from "./registerTypes";
 
-export default function ThirdPage({ prevPage }: { prevPage: () => void }) {
+export default function ThirdPage({
+	prevPage,
+	user,
+	setUser,
+}: {
+	prevPage: () => void;
+	user: RegisterState;
+	setUser: React.Dispatch<React.SetStateAction<RegisterState>>;
+}) {
 	return (
 		<>
 			<div className="mb-6 w-full flex justify-center items-center relative flex-col">
