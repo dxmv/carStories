@@ -3,5 +3,5 @@ export interface RegisterState {
 	email: string;
 	password: string;
 	bio: string;
-	image: string;
+	image: File | null;
 }

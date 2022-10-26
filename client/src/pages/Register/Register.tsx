@@ -12,7 +12,7 @@ export default function Register() {
 		email: "",
 		password: "",
 		bio: "",
-		image: "",
+		image: null,
 	});
 
 	const nextPage = () => {
