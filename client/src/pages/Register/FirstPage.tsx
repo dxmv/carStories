@@ -13,9 +13,11 @@ interface ErrorState {
 export default function FirstPage({
 	user,
 	setUser,
+	goToNextPage,
 }: {
 	user: RegisterState;
 	setUser: React.Dispatch<React.SetStateAction<RegisterState>>;
+	goToNextPage: () => void;
 }) {
 	const [error, setError] = useState<ErrorState>({
 		usernameError: "",
@@ -23,7 +25,16 @@ export default function FirstPage({
 		passwordError: "",
 	});
 
-	const nextPage = () => {};
+	const nextPage = () => {
+		if (
+			error.usernameError !== "" ||
+			error.emailError !== "" ||
+			error.passwordError !== ""
+		) {
+			return;
+		}
+		goToNextPage();
+	};
 
 	const setUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.value === "") {
@@ -91,6 +102,7 @@ export default function FirstPage({
 			});
 		}
 	};
+
 	return (
 		<>
 			<Field

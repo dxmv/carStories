@@ -44,7 +44,7 @@ export default function Register() {
 					></div>
 				</div>
 				{page === 1 ? (
-					<FirstPage user={user} setUser={setUser} />
+					<FirstPage user={user} setUser={setUser} goToNextPage={nextPage} />
 				) : page === 2 ? (
 					<SecondPage
 						nextPage={nextPage}
