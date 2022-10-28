@@ -25,7 +25,27 @@ export default function FirstPage({
 		passwordError: "",
 	});
 
-	const nextPage = () => {
+	const nextPage = async () => {
+		console.log(user);
+		if (user.username === "") {
+			await setError(prev => {
+				return { ...prev, usernameError: "Username must not be empty" };
+			});
+			return;
+		}
+		if (user.password === "") {
+			await setError(prev => {
+				return { ...prev, passwordError: "Password must not be empty" };
+			});
+			return;
+		}
+		if (user.email === "") {
+			await setError(prev => {
+				return { ...prev, emailError: "Email must not be empty" };
+			});
+			return;
+		}
+		console.log(error);
 		if (
 			error.usernameError !== "" ||
 			error.emailError !== "" ||
@@ -33,6 +53,7 @@ export default function FirstPage({
 		) {
 			return;
 		}
+
 		goToNextPage();
 	};
 
@@ -87,7 +108,7 @@ export default function FirstPage({
 		const res = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.exec(e.target.value);
 		if (res) {
 			setUser(prev => {
-				return { ...prev, email: e.target.value };
+				return { ...prev, password: e.target.value };
 			});
 			setError(prev => {
 				return { ...prev, passwordError: "" };

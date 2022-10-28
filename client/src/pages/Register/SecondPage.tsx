@@ -26,7 +26,11 @@ export default function SecondPage({
 		}
 	};
 
-	const handleNext = () => {
+	const handleNext = async () => {
+		if (user.bio === "") {
+			await setError("This field shouldn't be empty");
+			return;
+		}
 		if (error !== "") {
 			return;
 		}

@@ -6,10 +6,12 @@ export default function ThirdPage({
 	prevPage,
 	user,
 	setUser,
+	submit,
 }: {
 	prevPage: () => void;
 	user: RegisterState;
 	setUser: React.Dispatch<React.SetStateAction<RegisterState>>;
+	submit: () => void;
 }) {
 	const [error, setError] = useState<string>("");
 
@@ -31,14 +33,31 @@ export default function ThirdPage({
 		}
 	};
 
+	const handleFinish = () => {
+		if (error !== "") {
+			return;
+		}
+		submit();
+	};
+
 	return (
 		<>
 			<div className="mb-2 w-full flex justify-center items-center relative flex-col">
 				<div className="rounded-full w-44 h-44 bg-black flex flex-col items-center justify-center">
-					<AiFillPicture size={28} color="white" className="mb-3" />
-					<p className=" font-semibold mb-3 text-white text-center">
-						Upload your profile picture here
-					</p>
+					{!user.image ? (
+						<>
+							<AiFillPicture size={28} color="white" className="mb-3" />
+							<p className=" font-semibold mb-3 text-white text-center">
+								Upload your profile picture here
+							</p>
+						</>
+					) : (
+						<img
+							src={URL.createObjectURL(user.image)}
+							alt="selected"
+							className="w-full rounded-full h-full"
+						/>
+					)}
 				</div>
 				<label
 					id="custom-file-upload"
@@ -50,7 +69,10 @@ export default function ThirdPage({
 			</div>
 			<p className="text-red-600 text-center mb-6">{error}</p>
 
-			<button className="mb-6 bg-orange-400 w-1/4 p-3 font-bold text-white rounded-lg text-lg">
+			<button
+				className="mb-6 bg-orange-400 w-1/4 p-3 font-bold text-white rounded-lg text-lg"
+				onClick={handleFinish}
+			>
 				FINISH
 			</button>
 			<button

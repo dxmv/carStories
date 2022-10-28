@@ -29,6 +29,12 @@ export default function Register() {
 		setPage(prev => prev - 1);
 	};
 
+	const handleSubmit = () => {
+		// if(user.image===null){
+		// }
+		// Register user
+	};
+
 	return (
 		<div className="w-screen h-screen overflow-hidden flex justify-center items-center">
 			<div className="flex flex-col items-center w-1/5  p-6 shadow-xl rounded-lg border-2">
@@ -53,7 +59,12 @@ export default function Register() {
 						setUser={setUser}
 					/>
 				) : (
-					<ThirdPage prevPage={prevPage} user={user} setUser={setUser} />
+					<ThirdPage
+						prevPage={prevPage}
+						user={user}
+						setUser={setUser}
+						submit={handleSubmit}
+					/>
 				)}
 
 				<p className="text-md">
