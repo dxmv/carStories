@@ -22,7 +22,7 @@ sequelize
 	.authenticate()
 	.then(() => console.log("Database connected"))
 	.catch(e => console.log(e));
-sequelize.sync({ force: true });
+// sequelize.sync({ force: true });
 relationships();
 
 // Body parser

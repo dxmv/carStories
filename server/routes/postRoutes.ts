@@ -21,6 +21,10 @@ router.get("/", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
 	try {
 		const post = await postController.getPostById(req.params.id);
+		if (!post) {
+			res.status(404).json(`No post with id ${req.params.id}`);
+			return;
+		}
 		res.status(200).json(post);
 	} catch (e) {
 		next(e);
