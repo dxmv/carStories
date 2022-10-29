@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 dotenv.config();
 
 // Route imports
@@ -29,6 +30,16 @@ app.use(bodyParser.json());
 app.use(
 	bodyParser.urlencoded({
 		extended: true,
+	})
+);
+// Cors
+app.use(
+	cors({
+		origin: "*",
+		methods: "GET,HEAD,OPTIONS,POST,PUT",
+		allowedHeaders:
+			"Origin, X-Requested-With, Content-Type, Accept, Authorization",
+		credentials: true,
 	})
 );
 
