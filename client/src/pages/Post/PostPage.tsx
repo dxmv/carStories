@@ -1,32 +1,56 @@
 import React from "react";
+import Loading from "../../components/Loading/Loading";
+import { useGetPostByIdQuery } from "../../redux/api/postSlice";
 import AddComment from "./AddComment";
-import Comment from "./Comment";
+import CommentList from "./CommentList";
 import Description from "./Description";
 
+const IMAGE_PATH = "http://localhost:8080/images/posts";
+
 export default function PostPage() {
+	const { data, isLoading, error, isError } = useGetPostByIdQuery(2);
+
+	if (isLoading || !data) {
+		return <Loading />;
+	}
+	if (isError) {
+		// Error Page
+		console.log(error);
+
+		return (
+			<div>
+				<p>Error</p>
+			</div>
+		);
+	}
+	console.log(data);
 	return (
 		<div className="w-screen flex justify-center  px-20 py-12 h-screen ">
 			<div className="w-3/6 h-5/6 flex flex-col border-2">
-				<div className="p-4 flex items-center overflow-hidden">
+				<div className="p-4 flex items-center overflow-hidden border-b-2">
 					<span className="rounded-full bg-black w-8 h-8 mr-2"></span>
-					<p className="text-lg">user</p>
+					<p className="text-lg">{data.creator.username}</p>
 				</div>
 				<div>
 					<img
-						src="https://economictimes.indiatimes.com/thumb/msid-94422013,width-736,height-736,resizemode-4,imgsize-24360/andrew-tate-.jpg?from=mdr"
-						alt="Tate"
+						src={`${IMAGE_PATH}/${data.image}`}
+						alt="Post"
 						className="h-full w-full"
 					/>
 				</div>
 			</div>
 			<div className="ml-5 w-1/5 rounded-md h-5/6 border-2 px-3 py-5 overflow-y-hidden">
-				<Description text="Precizno" />
-				<div id="comments" className="  my-4" style={{ height: "80%" }}>
-					<Comment text={"Test"} />
-					<Comment text={"Test"} />
-					<Comment text={"Test"} />
-					<Comment text={"Test"} />
-				</div>
+				<Description text={data?.caption} />
+				{data.comments.length === 0 ? (
+					<div
+						className="my-4 flex justify-center items-center"
+						style={{ height: "80%" }}
+					>
+						<p className="font-semibold text-xl opacity-80">No comments</p>
+					</div>
+				) : (
+					<CommentList comments={data.comments} />
+				)}
 				<AddComment />
 			</div>
 		</div>
