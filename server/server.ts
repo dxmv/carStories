@@ -8,6 +8,7 @@ import { router as userRoutes } from "./routes/userRoutes";
 import { router as loginRoutes } from "./routes/loginRoutes";
 import { router as postRoutes } from "./routes/postRoutes";
 import { router as commentRoutes } from "./routes/commentRoutes";
+import { router as imageRoutes } from "./routes/imageRoutes";
 
 import sequelize from "./database/connection";
 import bodyParser from "body-parser";
@@ -52,6 +53,7 @@ app.use("/users", userRoutes);
 app.use("/login", loginRoutes);
 app.use("/posts", postRoutes);
 app.use("/comments", commentRoutes);
+app.use("/images", imageRoutes);
 app.use(errorHandle);
 
 app.listen(process.env.PORT, () => {
