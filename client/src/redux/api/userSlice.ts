@@ -1,3 +1,4 @@
+import { User } from "../../types";
 import { apiSlice } from "./apiSlice";
 
 export const userApi = apiSlice.injectEndpoints({
@@ -12,8 +13,13 @@ export const userApi = apiSlice.injectEndpoints({
 				body: user,
 			}),
 		}),
+		getUserById: build.query<User, { id: string }>({
+			query: id => ({
+				url: `/users/${id}`,
+			}),
+		}),
 	}),
 	overrideExisting: false,
 });
 
-export const { useLoginMutation } = userApi;
+export const { useLoginMutation, useGetUserByIdQuery } = userApi;
