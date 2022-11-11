@@ -25,8 +25,12 @@ router.post("/", async (req, res, next) => {
 			process.env.JWT_SECRET || "secret",
 			{ expiresIn: "1d" }
 		);
-		console.log({ id: await user?.getDataValue("userId"), username: username });
-		res.status(202).json({ token: `Bearer ${token}` });
+		res
+			.status(202)
+			.json({
+				token: `Bearer ${token}`,
+				id: await user?.getDataValue("userId"),
+			});
 	} catch (e) {
 		next(e);
 	}
