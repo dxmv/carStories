@@ -55,7 +55,8 @@ export default function Post({ post }: { post: PostType }) {
 					{post.likes.length}
 				</div>
 				<div className="flex flex-col items-center">
-					<AiOutlineComment size={36} />0
+					<AiOutlineComment size={36} />
+					{post.comments.length}
 				</div>
 			</div>
 		</div>

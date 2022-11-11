@@ -2,11 +2,18 @@ import { apiSlice } from "./apiSlice";
 
 export const userApi = apiSlice.injectEndpoints({
 	endpoints: build => ({
-		example: build.query({
-			query: () => "test",
+		login: build.mutation<
+			{ token: string },
+			{ username: string; password: string }
+		>({
+			query: user => ({
+				url: "/login",
+				method: "POST",
+				body: user,
+			}),
 		}),
 	}),
 	overrideExisting: false,
 });
 
-export const { useExampleQuery } = userApi;
+export const { useLoginMutation } = userApi;
