@@ -4,6 +4,7 @@ import { useGetPostByIdQuery } from "../../redux/api/postSlice";
 import AddComment from "./AddComment";
 import CommentList from "./CommentList";
 import Description from "./Description";
+import ErrorPage from "../ErrorPage/ErrorPage";
 
 const IMAGE_PATH = "http://localhost:8080/images/posts";
 
@@ -14,21 +15,18 @@ export default function PostPage() {
 		return <Loading />;
 	}
 	if (isError) {
-		// Error Page
-		console.log(error);
-
-		return (
-			<div>
-				<p>Error</p>
-			</div>
-		);
+		return <ErrorPage />;
 	}
-	console.log(data);
+
 	return (
 		<div className="w-screen flex justify-center  px-20 py-12 h-screen ">
 			<div className="w-3/6 h-5/6 flex flex-col border-2">
 				<div className="p-4 flex items-center overflow-hidden border-b-2">
-					<span className="rounded-full bg-black w-8 h-8 mr-2"></span>
+					<img
+						className="rounded-full w-8 h-8 mr-2 overflow-hidden"
+						src={`${IMAGE_PATH}/${data.image}`}
+						alt="User"
+					/>
 					<p className="text-lg">{data.creator.username}</p>
 				</div>
 				<div>
