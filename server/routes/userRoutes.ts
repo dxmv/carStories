@@ -35,9 +35,9 @@ router.get("/:id", async (req, res, next) => {
 	}
 });
 
-// GET CURRENT USER
+// GET USER BY ID
 router.get(
-	"/:id",
+	"/current",
 	passport.authenticate("jwt", { session: false }),
 	async (req, res, next) => {
 		try {
@@ -48,7 +48,7 @@ router.get(
 			} else {
 				res.status(404).json({
 					success: false,
-					message: `There is no user with ${req.params.id} as the id`,
+					message: `There is no user with ${current.userId} as the id`,
 				});
 			}
 		} catch (e) {
