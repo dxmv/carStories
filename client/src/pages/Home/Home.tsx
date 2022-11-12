@@ -4,9 +4,12 @@ import { useGetAllPostsQuery } from "../../redux/api/postSlice";
 import Loading from "../../components/Loading/Loading";
 import ErrorPage from "../ErrorPage/ErrorPage";
 import PostList from "../../components/PostList/PostList";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 export default function Home() {
 	const { data, isLoading, isError, error } = useGetAllPostsQuery();
+	const user = useSelector((state: RootState) => state.user.user);
 
 	if (isLoading || !data) {
 		return <Loading />;
@@ -14,7 +17,7 @@ export default function Home() {
 	if (isError) {
 		return <ErrorPage />;
 	}
-	console.log(data);
+	console.log(user);
 	return (
 		<div className="w-screen flex justify-center items-center p-12">
 			<PostList posts={data} />

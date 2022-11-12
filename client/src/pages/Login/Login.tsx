@@ -4,6 +4,7 @@ import Field from "../../components/AccountField/Field";
 import { BsFillKeyFill } from "react-icons/bs";
 import { AiOutlineUser } from "react-icons/ai";
 import { useLoginMutation } from "../../redux/api/userSlice";
+import { setToken } from "../../utils/jwtTokenHandle";
 
 interface LoginState {
 	username: string;
@@ -13,6 +14,7 @@ interface LoginState {
 interface ErrorState {
 	usernameError: string;
 	passwordError: string;
+	formError: string;
 }
 
 export default function Login() {
@@ -20,6 +22,7 @@ export default function Login() {
 	const [error, setError] = useState<ErrorState>({
 		usernameError: "",
 		passwordError: "",
+		formError: "",
 	});
 	const [login, loginResult] = useLoginMutation();
 
@@ -72,14 +75,41 @@ export default function Login() {
 	};
 
 	const handleSubmit = async () => {
+		if (error.usernameError !== "" || error.passwordError !== "") {
+			return;
+		}
 		await login(user);
-		console.log(loginResult);
+		if (loginResult.isError) {
+			setError(prev => {
+				const err: any = loginResult.error;
+				return {
+					...prev,
+					formError: err.data.message,
+				};
+			});
+			return;
+		}
+		if (loginResult.isUninitialized) {
+			setError(prev => {
+				return {
+					...prev,
+					formError: "There was an error, please try again",
+				};
+			});
+			return;
+		}
+		if (loginResult.data) {
+			setToken(loginResult.data.token);
+		}
 	};
 
 	return (
 		<div className="w-screen h-screen overflow-hidden flex justify-center items-center">
 			<div className="flex flex-col items-center w-1/5  p-6 shadow-xl rounded-lg border-2">
-				<h1 className="mb-6 font-bold text-3xl">LOGO</h1>
+				<h1 className="mb-1 font-bold text-3xl">LOGO</h1>
+				<p className="mb-6" style={{ color: "red" }}>
+					{error.formError}
+				</p>
 				<Field
 					type="text"
 					icon={<AiOutlineUser className="absolute top-2 left-2" size={32} />}
