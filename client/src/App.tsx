@@ -42,7 +42,7 @@ const router = createBrowserRouter([
 		),
 	},
 	{
-		path: "/user",
+		path: "/users/:id",
 		element: (
 			<>
 				<Nav />

@@ -18,33 +18,17 @@ router.get("/", async (req, res, next) => {
 	}
 });
 
-// GET USER BY ID
-router.get("/:id", async (req, res, next) => {
-	try {
-		const user = await userController.getUserById(req.params.id);
-		if (user) {
-			res.status(200).json({ success: true, user });
-		} else {
-			res.status(404).json({
-				success: false,
-				message: `There is no user with ${req.params.id} as the id`,
-			});
-		}
-	} catch (e) {
-		next(e);
-	}
-});
-
-// GET USER BY ID
+// GET CURRENT USER
 router.get(
 	"/current",
 	passport.authenticate("jwt", { session: false }),
 	async (req, res, next) => {
 		try {
 			const current: any = req.user;
+			console.log(req.user + "\n\n\n\n\n");
 			const user = await userController.getUserById(current.userId);
 			if (user) {
-				res.status(200).json({ success: true, user });
+				res.status(200).json(user);
 			} else {
 				res.status(404).json({
 					success: false,
@@ -56,6 +40,23 @@ router.get(
 		}
 	}
 );
+
+// GET USER BY ID
+router.get("/:id", async (req, res, next) => {
+	try {
+		const user = await userController.getUserById(req.params.id);
+		if (user) {
+			res.status(200).json(user);
+		} else {
+			res.status(404).json({
+				success: false,
+				message: `There is no user with ${req.params.id} as the id`,
+			});
+		}
+	} catch (e) {
+		next(e);
+	}
+});
 
 // REGISTER A USER
 router.post("/", upload.single("image"), async (req, res, next) => {

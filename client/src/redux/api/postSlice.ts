@@ -13,4 +13,8 @@ export const postSlice = apiSlice.injectEndpoints({
 	overrideExisting: false,
 });
 
-export const { useGetPostByIdQuery, useGetAllPostsQuery } = postSlice;
+export const {
+	useGetPostByIdQuery,
+	useLazyGetPostByIdQuery,
+	useGetAllPostsQuery,
+} = postSlice;

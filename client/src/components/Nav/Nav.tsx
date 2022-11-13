@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { AiOutlineSearch, AiFillHome } from "react-icons/ai";
 import { MdAddBox } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../../hooks";
+import { USER_IMAGE_PATH } from "../../utils/backendURLS";
 import ProfileDropdown from "./ProfileDropdown";
 
 export default function Nav() {
 	const [open, setOpen] = useState<boolean>(false);
+	const user = useAppSelector(state => state.user.user);
 
 	const handleOpen = () => {
 		setOpen(prev => !prev);
@@ -31,10 +34,12 @@ export default function Nav() {
 				<Link to={"/new_post"}>
 					<MdAddBox size={32} className="mr-6" />
 				</Link>
-				<span
-					className="rounded-full bg-black w-8 h-8"
+				<img
+					className="rounded-full w-8 h-8 bg-black"
+					src={`${USER_IMAGE_PATH}/${user?.image}`}
+					alt="User"
 					onClick={handleOpen}
-				></span>
+				/>
 				{open && <ProfileDropdown />}
 			</div>
 		</div>

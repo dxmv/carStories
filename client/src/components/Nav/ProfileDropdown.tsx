@@ -1,8 +1,11 @@
 import React from "react";
 import { AiOutlineUser, AiFillSetting, AiOutlineLogout } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../../hooks";
 
 export default function ProfileDropdown() {
+	const user = useAppSelector(state => state.user.user);
+
 	return (
 		<div
 			className="absolute right-3   w-1/5 whitespace-nowrap top-12 rounded-md bg-white border-2 shadow-md shadow-black overflow-visible"
@@ -11,7 +14,7 @@ export default function ProfileDropdown() {
 		>
 			<Link
 				className="flex p-2 items-center relative overflow-visible"
-				to="/user"
+				to={`/users/${user?.userId}`}
 			>
 				<AiOutlineUser size={20} className="mr-2" />
 				<p>Profile</p>

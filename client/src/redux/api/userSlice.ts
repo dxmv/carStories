@@ -15,7 +15,7 @@ export const userApi = apiSlice.injectEndpoints({
 		}),
 		// Get queries
 		getUserById: build.query<User, { id: string }>({
-			query: id => ({
+			query: ({ id }) => ({
 				url: `/users/${id}`,
 			}),
 		}),
@@ -92,5 +92,6 @@ export const userApi = apiSlice.injectEndpoints({
 export const {
 	useLoginMutation,
 	useGetUserByIdQuery,
+	useLazyGetUserByIdQuery,
 	useLazyGetCurrentUserQuery,
 } = userApi;
