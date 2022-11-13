@@ -16,8 +16,6 @@ export default function Post({ post }: { post: PostType }) {
 		setVisible(false);
 	};
 
-	console.log(post);
-
 	return (
 		<div className="w-full h-2/3 shadow-md shadow-black mb-10 overflow-visible">
 			<div className="p-3 flex items-center">
