@@ -5,11 +5,15 @@ import AddComment from "./AddComment";
 import CommentList from "./CommentList";
 import Description from "./Description";
 import ErrorPage from "../ErrorPage/ErrorPage";
+import { useParams } from "react-router-dom";
 
 const IMAGE_PATH = "http://localhost:8080/images/posts";
 
 export default function PostPage() {
-	const { data, isLoading, error, isError } = useGetPostByIdQuery(2);
+	const { id } = useParams();
+	const { data, isLoading, error, isError, refetch } = useGetPostByIdQuery(
+		id || "1"
+	);
 
 	if (isLoading || !data) {
 		return <Loading />;
@@ -38,7 +42,12 @@ export default function PostPage() {
 				</div>
 			</div>
 			<div className="ml-5 w-1/5 rounded-md h-5/6 border-2 px-3 py-5 overflow-y-hidden">
-				<Description text={data?.caption} />
+				<Description
+					id={`${data.postId}`}
+					text={data.caption}
+					likes={data.likes}
+					refetch={refetch}
+				/>
 				{data.comments.length === 0 ? (
 					<div
 						className="my-4 flex justify-center items-center"
