@@ -29,7 +29,7 @@ export default function Profile() {
 			<div className="border-b-2 w-4/5 mb-12 flex pb-5">
 				<img
 					src={`${USER_IMAGE_PATH}/${user.image}`}
-					className="rounded-full"
+					className="rounded-full w-1/5 h-1/5"
 					alt="User"
 				/>
 				<div className="flex flex-col ml-5">
@@ -44,7 +44,7 @@ export default function Profile() {
 			</div>
 			<div className="grid w-4/5 grid-cols-5 gap-5">
 				{user.posts.map(p => (
-					<ProfilePost key={p.postId} postId={p.postId} />
+					<ProfilePost key={p.postId} postId={`${p.postId}`} />
 				))}
 			</div>
 		</div>

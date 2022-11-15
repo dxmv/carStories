@@ -24,14 +24,17 @@ export default function Post({ post }: { post: PostType }) {
 					src={`${USER_IMAGE_PATH}/${post.creator.image}`}
 					alt="User"
 				/>
-				<p className="text-lg">{post.creator.username}</p>
+				<Link to={`/users/${post.creator.userId}`} className="text-lg">
+					{post.creator.username}
+				</Link>
+				{/* <p className="text-lg"><Link></Link></p> */}
 			</div>
 			<Link
 				style={{ height: "90%" }}
 				className="relative"
 				onMouseEnter={handleEnter}
 				onMouseLeave={handleLeave}
-				to="post/1"
+				to={`posts/${post.postId}`}
 			>
 				<img
 					src={`${POST_IMAGE_PATH}/${post.image}`}

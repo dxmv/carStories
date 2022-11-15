@@ -15,7 +15,7 @@ export default function Description({
 	likes: User[];
 	refetch: () => void;
 }) {
-	const [trigger, result] = useLikePostMutation();
+	const [trigger] = useLikePostMutation();
 
 	const likePost = async () => {
 		await trigger({ id });
