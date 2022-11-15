@@ -10,6 +10,13 @@ export const postSlice = apiSlice.injectEndpoints({
 			query: () => ({ url: "posts" }),
 		}),
 		// Mutations
+		createPost: build.mutation<Post, FormData>({
+			query: body => ({
+				url: "/posts/",
+				method: "POST",
+				body,
+			}),
+		}),
 		changeCaption: build.mutation<Post, { id: string; caption: string }>({
 			query: ({ id, caption }) => ({
 				url: `/posts/${id}`,
@@ -38,4 +45,5 @@ export const {
 	useLazyGetPostByIdQuery,
 	useGetAllPostsQuery,
 	useLikePostMutation,
+	useCreatePostMutation,
 } = postSlice;
