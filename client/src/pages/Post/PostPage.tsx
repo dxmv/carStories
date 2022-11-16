@@ -58,7 +58,7 @@ export default function PostPage() {
 				) : (
 					<CommentList comments={data.comments} />
 				)}
-				<AddComment />
+				<AddComment refetch={refetch} id={`${data.postId}`} />
 			</div>
 		</div>
 	);
