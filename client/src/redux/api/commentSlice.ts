@@ -4,8 +4,8 @@ import { apiSlice } from "./apiSlice";
 export const commentSlice = apiSlice.injectEndpoints({
 	endpoints: build => ({
 		getCommentById: build.query<Comment, { id: string }>({
-			query: id => ({
-				url: `/comments/${id}`,
+			query: body => ({
+				url: `/comments/${body.id}`,
 			}),
 		}),
 		createComment: build.mutation<Comment, { text: string; id: string }>({

@@ -26,6 +26,6 @@ export interface Comment {
 	commentId: number;
 	text: string;
 	post: Post;
-	user: User;
+	author: User;
 	likedBy: User[];
 }

@@ -2,10 +2,10 @@ import { BadRequest, Forbidden } from "../error/HttpError";
 import Comment, { CommentLikes } from "../models/Comment";
 
 const getAllComments = async () =>
-	await Comment.findAll({ include: ["author", "post", "likedBy"] });
+	await Comment.findAll({ include: ["author", "post"] });
 
 const getById = async (id: string) =>
-	await Comment.findByPk(id, { include: ["author", "post", "likedBy"] });
+	await Comment.findByPk(id, { include: ["author", "post"] });
 
 const createComment = async (text: string, userId: string, postId: string) => {
 	if (text.length < 1) {

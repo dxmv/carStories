@@ -30,6 +30,7 @@ router.post(
 	passport.authenticate("jwt", { session: false }),
 	async (req, res, next) => {
 		try {
+			console.log("a");
 			const user: any = req.user;
 			const comment = await commentController.createComment(
 				req.body.text,
@@ -62,6 +63,7 @@ router.patch(
 	}
 );
 
+// LIKE COMMENT
 router.patch(
 	"/like/:id",
 	passport.authenticate("jwt", { session: false }),
