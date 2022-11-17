@@ -34,14 +34,14 @@ export default function ProfilePost({ postId }: { postId: string }) {
 	return (
 		<Link
 			to={`/posts/${postId}`}
-			className="relative bg-black overflow-hidden rounded-lg shadow-md shadow-black w-full min-h-3/5"
+			className="relative bg-black overflow-hidden rounded-lg shadow-md shadow-black w-full h-72 m-2"
 			onMouseEnter={handleHover}
 			onMouseLeave={handleLeave}
 		>
 			<img
 				src={`${POST_IMAGE_PATH}/${post.image}`}
 				alt="Post"
-				className="h-full w-full"
+				className="h-full w-full object-cover "
 			/>
 			{visible && (
 				<div
