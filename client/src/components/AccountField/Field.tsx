@@ -20,7 +20,9 @@ export default function Field({
 			<input
 				type={type}
 				className="border-2 rounded-lg text-lg p-2 w-full pl-10 shadow-md"
-				style={{ borderColor: error !== "" ? "red" : "black" }}
+				style={{
+					borderColor: error !== "" ? "red" : "black",
+				}}
 				placeholder={placeholder}
 				defaultValue={value}
 				onChange={setValue}

@@ -105,7 +105,7 @@ export default function Login() {
 
 	return (
 		<div className="w-screen h-screen overflow-hidden flex justify-center items-center">
-			<div className="flex flex-col items-center w-1/5  p-6 shadow-xl rounded-lg border-2">
+			<div className="flex flex-col items-center w-1/5 p-6 shadow-lg rounded-lg border-2  border-lighterOrange m-12">
 				<h1 className="mb-1 font-bold text-3xl">LOGO</h1>
 				<p className="mb-6" style={{ color: "red" }}>
 					{error.formError}
@@ -127,18 +127,18 @@ export default function Login() {
 					setValue={setPassword}
 				/>
 				<button
-					className="mb-6 bg-orange-400 w-1/4 p-3 font-bold text-white rounded-lg text-lg"
+					className="mb-6 bg-darkerOrange w-1/4 p-3 font-bold text-white rounded-lg text-lg"
 					onClick={handleSubmit}
 				>
 					Login
 				</button>
 				<p className="text-md">
 					Don't have an account?{" "}
-					<Link to="/register" className="text-orange-400">
+					<Link to="/register" className="text-darkerOrange">
 						Sign up here
 					</Link>
 				</p>
-				<Link to="/register" className="text-orange-400 text-sm mt-6">
+				<Link to="/register" className="text-darkerOrange text-sm mt-6">
 					Forgot password?
 				</Link>
 			</div>

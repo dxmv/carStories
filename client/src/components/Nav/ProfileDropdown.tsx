@@ -1,10 +1,18 @@
 import React from "react";
 import { AiOutlineUser, AiFillSetting, AiOutlineLogout } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { logoutUser } from "../../redux/userSlice";
+import { deleteToken } from "../../utils/jwtTokenHandle";
 
 export default function ProfileDropdown() {
 	const user = useAppSelector(state => state.user.user);
+	const dispatch = useAppDispatch();
+
+	const handleLogout = async () => {
+		await dispatch(logoutUser);
+		await deleteToken();
+	};
 
 	return (
 		<div
@@ -27,7 +35,11 @@ export default function ProfileDropdown() {
 				<AiFillSetting size={20} className="mr-2" />
 				<p>Options</p>
 			</Link>
-			<Link className="flex p-2 border-t-2 items-center" to="/logout">
+			<Link
+				className="flex p-2 border-t-2 items-center"
+				to="/login"
+				onClick={handleLogout}
+			>
 				<AiOutlineLogout size={20} className="mr-2" />
 				<p>Logout</p>
 			</Link>
