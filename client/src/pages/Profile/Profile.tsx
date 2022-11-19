@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Loading from "../../components/Loading/Loading";
 import { useLazyGetUserByIdQuery } from "../../redux/api/userSlice";
 import { User } from "../../types";
-import { USER_IMAGE_PATH } from "../../utils/backendURLS";
+import ProfilePicture from "./ProfilePicture";
 import ProfilePost from "./ProfilePost";
 
 export default function Profile() {
@@ -27,11 +27,7 @@ export default function Profile() {
 	return (
 		<div className="flex justify-center items-center pt-12 w-full flex-col">
 			<div className="border-b-2 w-4/5 mb-12 flex pb-5">
-				<img
-					src={`${USER_IMAGE_PATH}/${user.image}`}
-					className="rounded-full w-56 h-56 object-cover"
-					alt="User"
-				/>
+				<ProfilePicture id={Number(id)} />
 				<div className="flex flex-col ml-5 ">
 					<p className="mb-5 text-3xl font-bold overflow-hidden">
 						{user.username}
@@ -50,7 +46,7 @@ export default function Profile() {
 			</div>
 			<div className="grid w-4/5 grid-cols-6 gap-5">
 				{user.posts.map(p => (
-					<ProfilePost key={p.postId} postId={`${p.postId}`} />
+					<ProfilePost key={p.postId} postId={`${p.postId}`} user={user} />
 				))}
 			</div>
 		</div>

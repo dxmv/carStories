@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { AiOutlineHeart, AiOutlineComment } from "react-icons/ai";
+import { AiOutlineHeart, AiOutlineComment, AiFillHeart } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import Loading from "../../components/Loading/Loading";
 import { useLazyGetPostByIdQuery } from "../../redux/api/postSlice";
-import { Post } from "../../types";
+import { Post, User } from "../../types";
 import { POST_IMAGE_PATH } from "../../utils/backendURLS";
 
-export default function ProfilePost({ postId }: { postId: string }) {
+export default function ProfilePost({
+	postId,
+	user,
+}: {
+	postId: string;
+	user: User;
+}) {
 	const [visible, setVisible] = useState<boolean>(false);
 	const [post, setPost] = useState<Post | null>(null);
 	const [trigger] = useLazyGetPostByIdQuery();
@@ -49,7 +55,12 @@ export default function ProfilePost({ postId }: { postId: string }) {
 					style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
 				>
 					<div className="mr-4 flex flex-col items-center">
-						<AiOutlineHeart size={52} color="white" />
+						{user.likedPosts.find(curr => curr.postId === Number(postId)) ? (
+							<AiFillHeart size={52} color="white" />
+						) : (
+							<AiOutlineHeart size={52} color="white" />
+						)}
+
 						<p className="text-white">{post.likes.length}</p>
 					</div>
 					<div className="flex flex-col items-center">
