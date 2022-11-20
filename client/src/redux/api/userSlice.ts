@@ -58,13 +58,11 @@ export const userApi = apiSlice.injectEndpoints({
 				},
 			}),
 		}),
-		changeUserImage: build.mutation<User, { followId: string; token: string }>({
+		changeUserImage: build.mutation<User, FormData>({
 			query: body => ({
-				url: `/users/unfollow/${body.followId}`,
+				url: `/profilePicture/`,
 				method: "PATCH",
-				headers: {
-					authenticate: `${body.token}`,
-				},
+				body: body,
 			}),
 		}),
 		followUser: build.mutation<User, { followId: string; token: string }>({
@@ -94,4 +92,5 @@ export const {
 	useGetUserByIdQuery,
 	useLazyGetUserByIdQuery,
 	useLazyGetCurrentUserQuery,
+	useChangeUserImageMutation,
 } = userApi;

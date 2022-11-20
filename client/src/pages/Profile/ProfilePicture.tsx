@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import { User } from "../../types";
 import { USER_IMAGE_PATH } from "../../utils/backendURLS";
 import { FaImages } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { useAppSelector } from "../../hooks";
-import Loading from "../../components/Loading/Loading";
+import FormModal from "../../components/Modal/FormModal";
 
-export default function ProfilePicture({ id }: { id: number }) {
+export default function ProfilePicture({
+	id,
+	user,
+}: {
+	id: number;
+	user: User;
+}) {
 	const [hover, setHover] = useState<boolean>(false);
-	const user = useAppSelector(state => state.user.user);
-
-	if (!user) {
-		return <Loading />;
-	}
+	const [open, setOpen] = useState<boolean>(false);
 
 	const handleHover = () => {
 		setHover(true);
@@ -22,31 +22,46 @@ export default function ProfilePicture({ id }: { id: number }) {
 		setHover(false);
 	};
 
+	const handleOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
+	};
+
 	return (
-		<div
-			className="rounded-full w-56 h-56 relative"
-			onMouseEnter={handleHover}
-			onMouseLeave={handleLeave}
-		>
-			<img
-				src={`${USER_IMAGE_PATH}/${user.image}`}
-				className=" object-cover w-full h-full"
-				alt="User"
-			/>
-			{Number(id) === user.userId && hover ? (
-				<Link
-					className="absolute top-0 left-0 z-10 w-full h-full flex justify-center items-center flex-col"
-					style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
-					to="/changeProfilePicture/"
-				>
-					<FaImages size={52} color="white" />
-					<p className="text-white text-center mt-3">
-						Click here to change your profile picture
-					</p>
-				</Link>
-			) : (
-				<></>
+		<>
+			<div
+				className="rounded-full w-56 h-56 relative"
+				onMouseEnter={handleHover}
+				onMouseLeave={handleLeave}
+			>
+				<img
+					src={`${USER_IMAGE_PATH}/${user.image}`}
+					className=" object-cover w-full h-full"
+					alt="User"
+				/>
+				{Number(id) === user.userId && hover && (
+					<div
+						className="absolute top-0 left-0 z-10 w-full h-full flex justify-center items-center flex-col"
+						style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+						onClick={handleOpen}
+					>
+						<FaImages size={52} color="white" />
+						<p className="text-white text-center mt-3">
+							Click here to change your profile picture
+						</p>
+					</div>
+				)}
+			</div>
+			{open && (
+				<FormModal
+					handleClose={handleClose}
+					title="Change your profile picture"
+					tailwindSize="w-1/6 h-3/6"
+				/>
 			)}
-		</div>
+		</>
 	);
 }

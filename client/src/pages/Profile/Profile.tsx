@@ -27,7 +27,7 @@ export default function Profile() {
 	return (
 		<div className="flex justify-center items-center pt-12 w-full flex-col">
 			<div className="border-b-2 w-4/5 mb-12 flex pb-5">
-				<ProfilePicture id={Number(id)} />
+				<ProfilePicture id={Number(id)} user={user} />
 				<div className="flex flex-col ml-5 ">
 					<p className="mb-5 text-3xl font-bold overflow-hidden">
 						{user.username}
