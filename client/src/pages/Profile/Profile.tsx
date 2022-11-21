@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loading from "../../components/Loading/Loading";
 import { useAppSelector } from "../../hooks";
-import { useLazyGetUserByIdQuery } from "../../redux/api/userSlice";
 import CurrentProfile from "./CurrentProfile";
 
 import UserProfile from "./UserProfile";
@@ -26,5 +25,5 @@ export default function Profile() {
 		return <CurrentProfile user={reduxUser} />;
 	}
 
-	return <UserProfile id={`${id}`} />;
+	return <UserProfile id={`${id}`} currentUser={reduxUser} />;
 }

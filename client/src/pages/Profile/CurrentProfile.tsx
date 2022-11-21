@@ -6,7 +6,7 @@ import { User } from "../../types";
 export default function CurrentProfile({ user }: { user: User }) {
 	return (
 		<div className="flex justify-center items-center pt-12 w-full flex-col">
-			<div className="border-b-2 w-4/5 mb-12 flex pb-5">
+			<div className="border-b-2 w-4/5 mb-12 flex pb-5 ">
 				<ProfilePicture user={user} />
 				<div className="flex flex-col ml-5 ">
 					<p className="mb-5 text-3xl font-bold overflow-hidden">
@@ -20,6 +20,9 @@ export default function CurrentProfile({ user }: { user: User }) {
 						<p className="mr-5 font-bold overflow-hidden">Posts: 1</p>
 						<p className="font-bold overflow-hidden">Likes: 0</p>
 					</div>
+				</div>
+				<div className="justify-self-end text-right">
+					<button>Edit Profile</button>
 				</div>
 			</div>
 			<div className="grid w-4/5 grid-cols-6 gap-5">

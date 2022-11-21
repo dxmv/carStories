@@ -1,11 +1,25 @@
 import React from "react";
 import Loading from "../../components/Loading/Loading";
-import { useGetUserByIdQuery } from "../../redux/api/userSlice";
+import { useAppDispatch } from "../../hooks";
+import {
+	useFollowUserMutation,
+	useGetUserByIdQuery,
+} from "../../redux/api/userSlice";
+import { setUser } from "../../redux/userSlice";
+import { User } from "../../types";
 import { USER_IMAGE_PATH } from "../../utils/backendURLS";
 import ProfilePost from "./ProfilePost";
 
-export default function UserProfile({ id }: { id: string }) {
+export default function UserProfile({
+	id,
+	currentUser,
+}: {
+	id: string;
+	currentUser: User;
+}) {
 	const { isLoading, isError, data } = useGetUserByIdQuery({ id });
+	const [trigger] = useFollowUserMutation();
+	const dispatch = useAppDispatch();
 
 	if (!data || isLoading) {
 		return <Loading />;
@@ -14,6 +28,18 @@ export default function UserProfile({ id }: { id: string }) {
 	if (isError) {
 		return <p>Error</p>;
 	}
+
+	const handleFollow = async () => {
+		try {
+			const res = await trigger(id).unwrap();
+			if (res) {
+				dispatch(setUser(res));
+			}
+		} catch (e) {
+			let message = (e as Error).message;
+			console.log(message);
+		}
+	};
 
 	return (
 		<div className="flex justify-center items-center pt-12 w-full flex-col">
@@ -39,6 +65,13 @@ export default function UserProfile({ id }: { id: string }) {
 						</p>
 						<p className="font-bold overflow-hidden">Likes: 0</p>
 					</div>
+				</div>
+				<div>
+					<button onClick={handleFollow}>
+						{currentUser.following.find(e => e.userId === Number(id))
+							? "Following"
+							: "Follow"}
+					</button>
 				</div>
 			</div>
 			<div className="grid w-4/5 grid-cols-6 gap-5">
