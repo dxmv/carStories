@@ -135,21 +135,3 @@ router.patch(
 		}
 	}
 );
-
-// UNFOLLOW A USER
-router.patch(
-	"/unfollow/:id",
-	passport.authenticate("jwt", { session: false }),
-	async (req, res, next) => {
-		try {
-			const user: any = req.user;
-			const newUser = await userController.unfollowUser(
-				user.userId,
-				req.params.id
-			);
-			res.status(202).json(newUser);
-		} catch (e) {
-			next(e);
-		}
-	}
-);

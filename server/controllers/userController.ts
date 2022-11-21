@@ -87,14 +87,14 @@ const editProfilePicture = async (id: string, filename: string) => {
 };
 
 const followUser = async (userId: string, followID: string) => {
-	await Follow.create({ followedById: followID, followingId: userId });
-	return await getUserById(userId);
-};
-
-const unfollowUser = async (userId: string, followID: string) => {
-	await Follow.destroy({
+	const follow = await Follow.findOne({
 		where: { followedById: followID, followingId: userId },
 	});
+	if (follow) {
+		await follow.destroy();
+		return await getUserById(userId);
+	}
+	await Follow.create({ followedById: followID, followingId: userId });
 	return await getUserById(userId);
 };
 
@@ -105,5 +105,4 @@ export default {
 	editUser,
 	editProfilePicture,
 	followUser,
-	unfollowUser,
 };
