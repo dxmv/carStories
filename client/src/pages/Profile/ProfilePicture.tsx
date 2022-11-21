@@ -4,13 +4,7 @@ import { USER_IMAGE_PATH } from "../../utils/backendURLS";
 import { FaImages } from "react-icons/fa";
 import FormModal from "../../components/Modal/FormModal";
 
-export default function ProfilePicture({
-	id,
-	user,
-}: {
-	id: number;
-	user: User;
-}) {
+export default function ProfilePicture({ user }: { user: User }) {
 	const [hover, setHover] = useState<boolean>(false);
 	const [open, setOpen] = useState<boolean>(false);
 
@@ -42,7 +36,7 @@ export default function ProfilePicture({
 					className=" object-cover w-full h-full"
 					alt="User"
 				/>
-				{Number(id) === user.userId && hover && (
+				{hover && (
 					<div
 						className="absolute top-0 left-0 z-10 w-full h-full flex justify-center items-center flex-col"
 						style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}

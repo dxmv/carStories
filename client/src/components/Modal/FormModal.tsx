@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { useAppDispatch } from "../../hooks";
 import { useChangeUserImageMutation } from "../../redux/api/userSlice";
+import { setUser } from "../../redux/userSlice";
 import ImageField from "../AccountField/ImageField";
 
 export default function FormModal({
@@ -14,6 +16,7 @@ export default function FormModal({
 	const [image, setImage] = useState<File | null>(null);
 	const [error, setError] = useState<string>("");
 	const [trigger] = useChangeUserImageMutation();
+	const dispatch = useAppDispatch();
 
 	const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const files = e.target?.files;
@@ -35,9 +38,20 @@ export default function FormModal({
 			setError("You must choose an image");
 			return;
 		}
-		let formData = new FormData();
-		formData.append("image", image);
-		await trigger(formData);
+		try {
+			let formData = new FormData();
+			formData.append("image", image);
+			const res = await trigger(formData).unwrap();
+			if (res) {
+				await dispatch(setUser(res));
+				await handleClose();
+			} else {
+				throw new Error("There was an error");
+			}
+		} catch (e) {
+			let message = (e as Error).message;
+			await setError(message);
+		}
 	};
 
 	return (
@@ -54,6 +68,7 @@ export default function FormModal({
 						X
 					</button>
 				</div>
+				<p>{error}</p>
 				<div className="text-align-center">
 					<ImageField value={image} handleUpload={handleUpload} />
 				</div>

@@ -83,7 +83,7 @@ const editProfilePicture = async (id: string, filename: string) => {
 	const user = await User.findByPk(id);
 	await user?.setDataValue("image", filename);
 	await user?.save();
-	return user;
+	return getUserById(id);
 };
 
 const followUser = async (userId: string, followID: string) => {

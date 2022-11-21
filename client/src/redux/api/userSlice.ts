@@ -60,7 +60,7 @@ export const userApi = apiSlice.injectEndpoints({
 		}),
 		changeUserImage: build.mutation<User, FormData>({
 			query: body => ({
-				url: `/profilePicture/`,
+				url: `users/profilePicture/`,
 				method: "PATCH",
 				body: body,
 			}),

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AiOutlineHeart, AiOutlineComment, AiFillHeart } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import Loading from "../../components/Loading/Loading";
-import { useLazyGetPostByIdQuery } from "../../redux/api/postSlice";
-import { Post, User } from "../../types";
+import { useGetPostByIdQuery } from "../../redux/api/postSlice";
+import { User } from "../../types";
 import { POST_IMAGE_PATH } from "../../utils/backendURLS";
 
 export default function ProfilePost({
@@ -14,19 +14,13 @@ export default function ProfilePost({
 	user: User;
 }) {
 	const [visible, setVisible] = useState<boolean>(false);
-	const [post, setPost] = useState<Post | null>(null);
-	const [trigger] = useLazyGetPostByIdQuery();
+	const { isLoading, isError, data } = useGetPostByIdQuery(postId);
 
-	useEffect(() => {
-		trigger(postId).then(r => {
-			if (r.data) {
-				setPost(r.data);
-			}
-		});
-	}, []);
-
-	if (!post) {
+	if (!data || isLoading) {
 		return <Loading />;
+	}
+	if (isError) {
+		return <p>Error</p>;
 	}
 
 	const handleHover = () => {
@@ -45,7 +39,7 @@ export default function ProfilePost({
 			onMouseLeave={handleLeave}
 		>
 			<img
-				src={`${POST_IMAGE_PATH}/${post.image}`}
+				src={`${POST_IMAGE_PATH}/${data.image}`}
 				alt="Post"
 				className="h-full w-full object-cover "
 			/>
@@ -61,11 +55,11 @@ export default function ProfilePost({
 							<AiOutlineHeart size={52} color="white" />
 						)}
 
-						<p className="text-white">{post.likes.length}</p>
+						<p className="text-white">{data.likes.length}</p>
 					</div>
 					<div className="flex flex-col items-center">
 						<AiOutlineComment size={52} color="white" />
-						<p className="text-white">{post.comments.length}</p>
+						<p className="text-white">{data.comments.length}</p>
 					</div>
 				</div>
 			)}

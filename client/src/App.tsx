@@ -8,7 +8,6 @@ import NewPost from "./pages/CreatePost/NewPost";
 import Profile from "./pages/Profile/Profile";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
-import { getToken } from "./utils/jwtTokenHandle";
 import { useDispatch } from "react-redux";
 import { setUser } from "./redux/userSlice";
 import { useLazyGetCurrentUserQuery } from "./redux/api/userSlice";
