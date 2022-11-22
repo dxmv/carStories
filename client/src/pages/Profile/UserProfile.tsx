@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import Loading from "../../components/Loading/Loading";
+import ListModal from "../../components/Modal/ListModal";
 import { useAppDispatch } from "../../hooks";
 import {
 	useFollowUserMutation,
@@ -17,7 +18,8 @@ export default function UserProfile({
 	id: string;
 	currentUser: User;
 }) {
-	const { isLoading, isError, data } = useGetUserByIdQuery({ id });
+	const [followedByModal, setFollowedByModal] = useState<boolean>(true);
+	const { isLoading, isError, data, refetch } = useGetUserByIdQuery({ id });
 	const [trigger] = useFollowUserMutation();
 	const dispatch = useAppDispatch();
 
@@ -33,7 +35,8 @@ export default function UserProfile({
 		try {
 			const res = await trigger(id).unwrap();
 			if (res) {
-				dispatch(setUser(res));
+				await dispatch(setUser(res));
+				await refetch();
 			}
 		} catch (e) {
 			let message = (e as Error).message;
@@ -61,9 +64,11 @@ export default function UserProfile({
 					<p className="w-4/5 text-lg mb-5 h-2/5 overflow-hidden">{data.bio}</p>
 					<div className="flex ">
 						<p className="mr-5 font-bold overflow-hidden">
+							Followers: {data.followedBy.length}
+						</p>
+						<p className="font-bold overflow-hidden">
 							Posts: {data.posts.length}
 						</p>
-						<p className="font-bold overflow-hidden">Likes: 0</p>
 					</div>
 				</div>
 				<div>
@@ -79,6 +84,14 @@ export default function UserProfile({
 					<ProfilePost key={p.postId} postId={`${p.postId}`} user={data} />
 				))}
 			</div>
+			{followedByModal && (
+				<ListModal
+					title="Followed by"
+					list={data.followedBy}
+					handleClose={() => setFollowedByModal(false)}
+					tailwindSize={"w-1/6 h-3/6"}
+				/>
+			)}
 		</div>
 	);
 }

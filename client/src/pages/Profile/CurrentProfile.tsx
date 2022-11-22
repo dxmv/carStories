@@ -17,8 +17,12 @@ export default function CurrentProfile({ user }: { user: User }) {
 					</p>
 					<p className="w-4/5 text-lg mb-5 h-2/5 overflow-hidden">{user.bio}</p>
 					<div className="flex ">
-						<p className="mr-5 font-bold overflow-hidden">Posts: 1</p>
-						<p className="font-bold overflow-hidden">Likes: 0</p>
+						<p className="mr-5 font-bold overflow-hidden">
+							Followers: {user.followedBy.length}
+						</p>
+						<p className="font-bold overflow-hidden">
+							Posts: {user.posts.length}
+						</p>
 					</div>
 				</div>
 				<div className="justify-self-end text-right">
