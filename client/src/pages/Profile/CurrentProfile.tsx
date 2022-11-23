@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import ProfilePicture from "./ProfilePicture";
 import ProfilePost from "./ProfilePost";
 import { User } from "../../types";
+import ListModal from "../../components/Modal/ListModal";
 
 export default function CurrentProfile({ user }: { user: User }) {
+	const [followedByModal, setFollowedByModal] = useState<boolean>(false);
+	const [followingModal, setFollowingModal] = useState<boolean>(false);
+
+	const handleOpenFollowedBy = () => {
+		setFollowedByModal(true);
+	};
+
+	const handleOpenFollowing = () => {
+		setFollowingModal(true);
+	};
+
 	return (
 		<div className="flex justify-center items-center pt-12 w-full flex-col">
 			<div className="border-b-2 w-4/5 mb-12 flex pb-5 ">
@@ -17,8 +29,17 @@ export default function CurrentProfile({ user }: { user: User }) {
 					</p>
 					<p className="w-4/5 text-lg mb-5 h-2/5 overflow-hidden">{user.bio}</p>
 					<div className="flex ">
-						<p className="mr-5 font-bold overflow-hidden">
+						<p
+							className="mr-5 font-bold overflow-hidden"
+							onClick={handleOpenFollowedBy}
+						>
 							Followers: {user.followedBy.length}
+						</p>
+						<p
+							className="mr-5 font-bold overflow-hidden"
+							onClick={handleOpenFollowing}
+						>
+							Following: {user.following.length}
 						</p>
 						<p className="font-bold overflow-hidden">
 							Posts: {user.posts.length}
@@ -35,6 +56,22 @@ export default function CurrentProfile({ user }: { user: User }) {
 						<ProfilePost key={p.postId} postId={`${p.postId}`} user={user} />
 					))}
 			</div>
+			{followedByModal && (
+				<ListModal
+					title="Followed by"
+					list={user.followedBy}
+					handleClose={() => setFollowedByModal(false)}
+					tailwindSize={"w-1/6 h-3/6"}
+				/>
+			)}
+			{followingModal && (
+				<ListModal
+					title="Following"
+					list={user.following}
+					handleClose={() => setFollowingModal(false)}
+					tailwindSize={"w-1/6 h-3/6"}
+				/>
+			)}
 		</div>
 	);
 }

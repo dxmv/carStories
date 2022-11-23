@@ -18,7 +18,8 @@ export default function UserProfile({
 	id: string;
 	currentUser: User;
 }) {
-	const [followedByModal, setFollowedByModal] = useState<boolean>(true);
+	const [followedByModal, setFollowedByModal] = useState<boolean>(false);
+	const [followingModal, setFollowingModal] = useState<boolean>(false);
 	const { isLoading, isError, data, refetch } = useGetUserByIdQuery({ id });
 	const [trigger] = useFollowUserMutation();
 	const dispatch = useAppDispatch();
@@ -44,6 +45,10 @@ export default function UserProfile({
 		}
 	};
 
+	const handleOpenFollowing = () => {
+		setFollowingModal(true);
+	};
+
 	return (
 		<div className="flex justify-center items-center pt-12 w-full flex-col">
 			<div className="border-b-2 w-4/5 mb-12 flex pb-5">
@@ -63,8 +68,17 @@ export default function UserProfile({
 					</p>
 					<p className="w-4/5 text-lg mb-5 h-2/5 overflow-hidden">{data.bio}</p>
 					<div className="flex ">
-						<p className="mr-5 font-bold overflow-hidden">
+						<p
+							className="mr-5 font-bold overflow-hidden"
+							onClick={() => setFollowedByModal(true)}
+						>
 							Followers: {data.followedBy.length}
+						</p>
+						<p
+							className="mr-5 font-bold overflow-hidden"
+							onClick={handleOpenFollowing}
+						>
+							Following: {data.following.length}
 						</p>
 						<p className="font-bold overflow-hidden">
 							Posts: {data.posts.length}
@@ -89,6 +103,14 @@ export default function UserProfile({
 					title="Followed by"
 					list={data.followedBy}
 					handleClose={() => setFollowedByModal(false)}
+					tailwindSize={"w-1/6 h-3/6"}
+				/>
+			)}
+			{followingModal && (
+				<ListModal
+					title="Following"
+					list={data.following}
+					handleClose={() => setFollowingModal(false)}
 					tailwindSize={"w-1/6 h-3/6"}
 				/>
 			)}

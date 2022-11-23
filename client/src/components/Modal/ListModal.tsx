@@ -44,10 +44,10 @@ function UserListElement({ user }: { user: User }) {
 				className="rounded-full w-10 h-10"
 			/>
 			<div>
-				<p>{user.username}</p>
-				<p>{user.email}</p>
+				<p className="font-bold">{user.username}</p>
+				<p className="text-sm">{user.email}</p>
 			</div>
-			<button>Zoran</button>
+			<button>Follow</button>
 		</div>
 	);
 }
