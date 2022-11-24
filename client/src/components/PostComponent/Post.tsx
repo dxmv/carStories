@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { AiOutlineHeart, AiOutlineComment } from "react-icons/ai";
+import { AiOutlineHeart, AiOutlineComment, AiFillHeart } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../../hooks";
 import { Post as PostType } from "../../types";
 import { POST_IMAGE_PATH, USER_IMAGE_PATH } from "../../utils/backendURLS";
 import "./post.css";
 
 export default function Post({ post }: { post: PostType }) {
 	const [visible, setVisible] = useState<boolean>(false);
+	const user = useAppSelector(state => state.user.user);
 
 	const handleEnter = () => {
 		setVisible(true);
@@ -52,7 +54,16 @@ export default function Post({ post }: { post: PostType }) {
 			</Link>
 			<div className="flex items-center p-3">
 				<div className="mr-4 flex flex-col items-center">
-					<AiOutlineHeart size={36} />
+					{user?.likedPosts.find(e => e.postId === post.postId) ? (
+						<>
+							<AiFillHeart size={36} />
+						</>
+					) : (
+						<>
+							<AiOutlineHeart size={36} />
+						</>
+					)}
+
 					{post.likes.length}
 				</div>
 				<div className="flex flex-col items-center">
