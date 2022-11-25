@@ -43,19 +43,12 @@ export const userApi = apiSlice.injectEndpoints({
 		}),
 		changeUserInfo: build.mutation<
 			User,
-			{ username: string; email: string; bio: string; token: string }
+			{ username: string; email: string; bio: string }
 		>({
 			query: user => ({
 				url: `/users/`,
-				method: "PUT",
-				headers: {
-					authenticate: `${user.token}`,
-				},
-				body: {
-					username: user.username,
-					email: user.email,
-					bio: user.bio,
-				},
+				method: "PATCH",
+				body: user,
 			}),
 		}),
 		changeUserImage: build.mutation<User, FormData>({
@@ -82,4 +75,5 @@ export const {
 	useLazyGetCurrentUserQuery,
 	useChangeUserImageMutation,
 	useFollowUserMutation,
+	useChangeUserInfoMutation,
 } = userApi;

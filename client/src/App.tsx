@@ -11,6 +11,7 @@ import Register from "./pages/Register/Register";
 import { useDispatch } from "react-redux";
 import { setUser } from "./redux/userSlice";
 import { useLazyGetCurrentUserQuery } from "./redux/api/userSlice";
+import EditProfile from "./pages/EditProfile/EditProfile";
 
 const router = createBrowserRouter([
 	{
@@ -56,6 +57,15 @@ const router = createBrowserRouter([
 	{
 		path: "/register",
 		element: <Register />,
+	},
+	{
+		path: "/edit_user",
+		element: (
+			<>
+				<Nav />
+				<EditProfile />
+			</>
+		),
 	},
 ]);
 

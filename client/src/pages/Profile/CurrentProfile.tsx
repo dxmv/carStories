@@ -3,6 +3,7 @@ import ProfilePicture from "./ProfilePicture";
 import ProfilePost from "./ProfilePost";
 import { User } from "../../types";
 import ListModal from "../../components/Modal/ListModal";
+import { Link } from "react-router-dom";
 
 export default function CurrentProfile({ user }: { user: User }) {
 	const [followedByModal, setFollowedByModal] = useState<boolean>(false);
@@ -47,7 +48,7 @@ export default function CurrentProfile({ user }: { user: User }) {
 					</div>
 				</div>
 				<div className="justify-self-end text-right">
-					<button>Edit Profile</button>
+					<Link to="/edit_user">Edit Profile</Link>
 				</div>
 			</div>
 			<div className="grid w-4/5 grid-cols-6 gap-5">
