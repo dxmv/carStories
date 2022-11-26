@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useAppSelector } from "../../hooks";
 import { Post as PostType } from "../../types";
 import { POST_IMAGE_PATH, USER_IMAGE_PATH } from "../../utils/backendURLS";
-import "./post.css";
+import DarkOverlay from "../DarkOverlay/DarkOverlay";
 
 export default function Post({ post }: { post: PostType }) {
 	const [visible, setVisible] = useState<boolean>(false);
@@ -29,7 +29,6 @@ export default function Post({ post }: { post: PostType }) {
 				<Link to={`/users/${post.creator.userId}`} className="text-lg">
 					{post.creator.username}
 				</Link>
-				{/* <p className="text-lg"><Link></Link></p> */}
 			</div>
 			<Link
 				style={{ height: "90%" }}
@@ -44,12 +43,15 @@ export default function Post({ post }: { post: PostType }) {
 					className="h-full w-full"
 				/>
 				{visible && (
-					<div
-						className="absolute bottom-0 left-0 w-full h-full p-3 flex items-end"
-						id="dark-overlay"
-					>
-						<p className="text-white font-semibold text-lg">{post.caption}</p>
-					</div>
+					<DarkOverlay
+						body={
+							<>
+								<p className="text-white font-semibold text-lg">
+									{post.caption}
+								</p>
+							</>
+						}
+					/>
 				)}
 			</Link>
 			<div className="flex items-center p-3">
