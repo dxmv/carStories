@@ -4,12 +4,26 @@ import { BadRequest } from "../error/HttpError";
 
 const getAllUsers = async () =>
 	await User.findAll({
-		include: ["followedBy", "following", "posts", "comments", "likedPosts"],
+		include: [
+			"followedBy",
+			"following",
+			"posts",
+			"comments",
+			"likedPosts",
+			"likedComments",
+		],
 	});
 
 const getUserById = async (id: string) =>
 	await User.findByPk(id, {
-		include: ["followedBy", "following", "posts", "comments", "likedPosts"],
+		include: [
+			"followedBy",
+			"following",
+			"posts",
+			"comments",
+			"likedPosts",
+			"likedComments",
+		],
 	});
 
 const createUser = async (

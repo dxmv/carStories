@@ -3,6 +3,19 @@ import User, { Follow, Likes } from "../models/User";
 import Comment, { CommentLikes } from "../models/Comment";
 
 const relationships = () => {
+	// Comment likes
+	User.belongsToMany(Comment, {
+		as: "likedComments",
+		through: CommentLikes,
+		foreignKey: "userId",
+	});
+
+	Comment.belongsToMany(User, {
+		as: "likedBy",
+		through: CommentLikes,
+		foreignKey: "commentId",
+	});
+
 	// User Posts
 	User.hasMany(Post, { as: "posts", foreignKey: "creatorId" });
 	Post.belongsTo(User, { as: "creator", foreignKey: "creatorId" });
@@ -38,19 +51,6 @@ const relationships = () => {
 	// Comments for a user
 	User.hasMany(Comment, { as: "comments", foreignKey: "commentUserId" });
 	Comment.belongsTo(User, { as: "author", foreignKey: "commentUserId" });
-
-	// Comment likes
-	User.belongsToMany(Comment, {
-		as: "likedComments",
-		through: CommentLikes,
-		foreignKey: "userId",
-	});
-
-	Post.belongsToMany(User, {
-		as: "likedBy",
-		through: CommentLikes,
-		foreignKey: "commentId",
-	});
 };
 
 export default relationships;

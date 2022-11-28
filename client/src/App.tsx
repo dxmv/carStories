@@ -71,11 +71,12 @@ const router = createBrowserRouter([
 
 function App() {
 	const dispatch = useDispatch();
-	const [trigger, data] = useLazyGetCurrentUserQuery();
+	const [trigger] = useLazyGetCurrentUserQuery();
 	useEffect(() => {
 		trigger().then(r => {
 			if (r.data) {
 				dispatch(setUser(r.data));
+				console.log(r.data);
 			}
 		});
 	}, []);

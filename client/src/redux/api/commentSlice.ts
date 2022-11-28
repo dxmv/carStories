@@ -1,11 +1,11 @@
-import { Post, Comment } from "../../types";
+import { Comment } from "../../types";
 import { apiSlice } from "./apiSlice";
 
 export const commentSlice = apiSlice.injectEndpoints({
 	endpoints: build => ({
-		getCommentById: build.query<Comment, { id: string }>({
-			query: body => ({
-				url: `/comments/${body.id}`,
+		getCommentById: build.query<Comment, string>({
+			query: id => ({
+				url: `/comments/${id}`,
 			}),
 		}),
 		createComment: build.mutation<Comment, { text: string; id: string }>({
@@ -21,6 +21,12 @@ export const commentSlice = apiSlice.injectEndpoints({
 				method: "DELETE",
 			}),
 		}),
+		likeComment: build.mutation<Comment, string>({
+			query: id => ({
+				url: `/comments/like/${id}`,
+				method: "PATCH",
+			}),
+		}),
 	}),
 });
 
@@ -28,4 +34,5 @@ export const {
 	useGetCommentByIdQuery,
 	useCreateCommentMutation,
 	useDeleteCommentMutation,
+	useLikeCommentMutation,
 } = commentSlice;

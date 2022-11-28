@@ -1,19 +1,21 @@
 import React, { useState } from "react";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import Loading from "../../components/Loading/Loading";
 import YesNoModal from "../../components/Modal/YesNoModal";
 import { useAppSelector } from "../../hooks";
 import {
 	useDeleteCommentMutation,
 	useGetCommentByIdQuery,
+	useLikeCommentMutation,
 } from "../../redux/api/commentSlice";
 import { USER_IMAGE_PATH } from "../../utils/backendURLS";
 
 export default function Comment({ id }: { id: string }) {
-	const { data, isLoading, isError, error } = useGetCommentByIdQuery({ id });
+	const { data, isLoading, isError, refetch } = useGetCommentByIdQuery(id);
 	const user = useAppSelector(state => state.user.user);
 	const [deleteModal, setDeleteModal] = useState<boolean>(false);
 	const [trigger] = useDeleteCommentMutation();
+	const [triggerLike] = useLikeCommentMutation();
 
 	if (isLoading || !data) {
 		return <Loading />;
@@ -21,6 +23,11 @@ export default function Comment({ id }: { id: string }) {
 	if (isError) {
 		return <p>Error</p>;
 	}
+
+	const handleLike = async () => {
+		await triggerLike(id);
+		await refetch();
+	};
 
 	return (
 		<div className="w-full flex items-center mb-5 ">
@@ -41,7 +48,12 @@ export default function Comment({ id }: { id: string }) {
 						</div>
 					)}
 				</div>
-				<AiOutlineHeart />
+				{user?.likedComments.findIndex(e => e.commentId === Number(id)) !==
+				-1 ? (
+					<AiFillHeart onClick={handleLike} />
+				) : (
+					<AiOutlineHeart onClick={handleLike} />
+				)}
 			</div>
 			{deleteModal && (
 				<YesNoModal
