@@ -81,7 +81,7 @@ router.patch(
 	}
 );
 
-// DELETE POST
+// DELETE COMMENT
 router.delete(
 	"/:id",
 	passport.authenticate("jwt", { session: false }),

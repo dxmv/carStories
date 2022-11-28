@@ -13,6 +13,11 @@ export const userApi = apiSlice.injectEndpoints({
 				body: user,
 			}),
 		}),
+		getAllUsers: build.query<User[], void>({
+			query: () => ({
+				url: "/users/",
+			}),
+		}),
 		// Get queries
 		getUserById: build.query<User, { id: string }>({
 			query: ({ id }) => ({

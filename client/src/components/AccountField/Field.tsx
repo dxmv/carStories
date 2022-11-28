@@ -7,6 +7,7 @@ export default function Field({
 	error,
 	value,
 	setValue,
+	className,
 }: {
 	type: "text" | "password" | "email";
 	icon: any;
@@ -14,9 +15,10 @@ export default function Field({
 	error: string;
 	value: string;
 	setValue: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	className?: string;
 }) {
 	return (
-		<div className="w-4/5 relative mb-6">
+		<div className={className ? className : `w-4/5 relative mb-6`}>
 			<input
 				type={type}
 				className="border-2 rounded-lg text-lg p-2 w-full pl-10 shadow-md"

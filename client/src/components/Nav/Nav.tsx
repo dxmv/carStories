@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { AiOutlineSearch, AiFillHome } from "react-icons/ai";
+import { AiFillHome } from "react-icons/ai";
 import { MdAddBox } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../hooks";
 import { USER_IMAGE_PATH } from "../../utils/backendURLS";
 import ProfileDropdown from "./ProfileDropdown";
+import Search from "./Search";
 
 export default function Nav() {
 	const [open, setOpen] = useState<boolean>(false);
@@ -20,13 +21,7 @@ export default function Nav() {
 			style={{ height: "6%", overflow: "visible" }}
 		>
 			<div>Logo</div>
-			<div className="w-1/6 h-full relative">
-				<input
-					type="text"
-					className="rounded-xl  w-full h-full border-2 p-2 pl-7"
-				/>
-				<AiOutlineSearch className="absolute top-1.5 left-2" size={20} />
-			</div>
+			<Search />
 			<div className="flex items-center overflow-visible whitespace-nowrap">
 				<Link to={"/"}>
 					<AiFillHome size={32} className="mr-6" />

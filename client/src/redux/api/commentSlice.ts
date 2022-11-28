@@ -15,8 +15,17 @@ export const commentSlice = apiSlice.injectEndpoints({
 				body: { text: body.text },
 			}),
 		}),
+		deleteComment: build.mutation<void, string>({
+			query: id => ({
+				url: `/comments/${id}`,
+				method: "DELETE",
+			}),
+		}),
 	}),
 });
 
-export const { useGetCommentByIdQuery, useCreateCommentMutation } =
-	commentSlice;
+export const {
+	useGetCommentByIdQuery,
+	useCreateCommentMutation,
+	useDeleteCommentMutation,
+} = commentSlice;
