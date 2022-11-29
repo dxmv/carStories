@@ -13,7 +13,7 @@ export const userApi = apiSlice.injectEndpoints({
 				body: user,
 			}),
 		}),
-		getAllUsers: build.query<User[], void>({
+		getAllUsers: build.query<Array<User>, void>({
 			query: () => ({
 				url: "/users/",
 			}),
@@ -81,4 +81,5 @@ export const {
 	useChangeUserImageMutation,
 	useFollowUserMutation,
 	useChangeUserInfoMutation,
+	useGetAllUsersQuery,
 } = userApi;
