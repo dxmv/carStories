@@ -27,6 +27,13 @@ export const commentSlice = apiSlice.injectEndpoints({
 				method: "PATCH",
 			}),
 		}),
+		editComment: build.mutation<Comment, { id: string; text: string }>({
+			query: params => ({
+				url: `/comments/${params.id}`,
+				body: { text: params.text },
+				method: "PATCH",
+			}),
+		}),
 	}),
 });
 
@@ -35,4 +42,5 @@ export const {
 	useCreateCommentMutation,
 	useDeleteCommentMutation,
 	useLikeCommentMutation,
+	useEditCommentMutation,
 } = commentSlice;
