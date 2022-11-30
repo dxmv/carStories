@@ -53,6 +53,7 @@ app.use("/login", loginRoutes);
 app.use("/posts", postRoutes);
 app.use("/comments", commentRoutes);
 app.use("/images", imageRoutes);
+app.use("/auth", imageRoutes);
 app.use(errorHandle);
 
 app.listen(process.env.PORT, () => {

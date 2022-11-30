@@ -116,8 +116,6 @@ router.patch(
 	}
 );
 
-// CHANGE PASSWORD
-
 // FOLLOW A USER
 router.patch(
 	"/follow/:id",
