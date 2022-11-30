@@ -11,7 +11,7 @@ router.patch(
 	async (req, res, next) => {
 		try {
 			const user: any = req.user;
-			await authController.sendMail(user.email);
+			await authController.passwordResetMail(user.email, user.userId);
 			res.status(202).json({ msg: "Email successfully sent" });
 		} catch (e) {
 			next(e);

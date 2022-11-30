@@ -1,6 +1,7 @@
 import Post from "../models/Post";
 import User, { Follow, Likes } from "../models/User";
 import Comment, { CommentLikes } from "../models/Comment";
+import Token from "../models/Token";
 
 const relationships = () => {
 	// Comment likes
@@ -51,6 +52,10 @@ const relationships = () => {
 	// Comments for a user
 	User.hasMany(Comment, { as: "comments", foreignKey: "commentUserId" });
 	Comment.belongsTo(User, { as: "author", foreignKey: "commentUserId" });
+
+	// Reset password token
+	User.hasMany(Token, { as: "tokensUser", foreignKey: "tokenId" });
+	Token.belongsTo(User, { as: "user", foreignKey: "userId" });
 };
 
 export default relationships;

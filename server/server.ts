@@ -9,6 +9,7 @@ import { router as loginRoutes } from "./routes/loginRoutes";
 import { router as postRoutes } from "./routes/postRoutes";
 import { router as commentRoutes } from "./routes/commentRoutes";
 import { router as imageRoutes } from "./routes/imageRoutes";
+import { router as authRoutes } from "./routes/authRoutes";
 
 import sequelize from "./database/connection";
 import bodyParser from "body-parser";
@@ -23,7 +24,7 @@ sequelize
 	.authenticate()
 	.then(() => console.log("Database connected"))
 	.catch(e => console.log(e));
-// sequelize.sync({ force: true }).then(() => console.log("Created database"));
+sequelize.sync({ force: true }).then(() => console.log("Created database"));
 relationships();
 
 // Body parser
@@ -52,8 +53,8 @@ app.use("/users", userRoutes);
 app.use("/login", loginRoutes);
 app.use("/posts", postRoutes);
 app.use("/comments", commentRoutes);
+app.use("/auth", authRoutes);
 app.use("/images", imageRoutes);
-app.use("/auth", imageRoutes);
 app.use(errorHandle);
 
 app.listen(process.env.PORT, () => {
