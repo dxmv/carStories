@@ -6,6 +6,7 @@ import { useGetAllUsersQuery } from "../../redux/api/userSlice";
 import { User } from "../../types";
 import Field from "../AccountField/Field";
 import Loading from "../Loading/Loading";
+import UserListItem from "../UserListItem/UserListItem";
 
 export default function Search() {
 	const [searchValue, setSearch] = useState<string>("");
@@ -50,7 +51,9 @@ export default function Search() {
 					className="absolute border-2 h-40 w-full left-0 bg-white rounded-md"
 					style={{ bottom: "-160px", zIndex: 100 }}
 				>
-					{currentUsers.map(e => e.username)}
+					{currentUsers.map(e => (
+						<UserListItem username={e.username} image={e.image} id={e.userId} />
+					))}
 				</div>
 			)}
 		</div>
