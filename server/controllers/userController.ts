@@ -1,6 +1,6 @@
 import User, { Follow } from "../models/User";
 import bcrypt from "bcrypt";
-import { BadRequest } from "../error/HttpError";
+import { BadRequest, NotFound } from "../error/HttpError";
 
 const getAllUsers = async () =>
 	await User.findAll({
@@ -112,6 +112,16 @@ const followUser = async (userId: string, followID: string) => {
 	return await getUserById(userId);
 };
 
+const resetUserPassword = async (id: string, password: string) => {
+	const user = await User.findByPk(id);
+	if (!user) {
+		throw new NotFound();
+	}
+	await user.setDataValue("password", await bcrypt.hash(password, 10));
+	await user.save();
+	return getUserById(id);
+};
+
 export default {
 	getAllUsers,
 	getUserById,
@@ -119,4 +129,5 @@ export default {
 	editUser,
 	editProfilePicture,
 	followUser,
+	resetUserPassword,
 };

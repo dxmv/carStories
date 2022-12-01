@@ -1,19 +1,20 @@
 import nodemailer from "nodemailer";
-import { HttpError } from "../error/HttpError";
+import { BadRequest, HttpError, NotFound } from "../error/HttpError";
 import Token from "../models/Token";
 import bcrypt from "bcrypt";
+import User from "../models/User";
+import userController from "./userController";
 
 const sendMail = async (mail: string, subject: string, text: string) => {
 	const transporter = nodemailer.createTransport({
 		service: "gmail",
-		port: 465,
-		secure: true,
+		secure: false,
 		auth: {
 			user: process.env.EMAIL,
 			pass: process.env.EMAIL_PASSWORD,
 		},
 	});
-	transporter.sendMail(
+	await transporter.sendMail(
 		{
 			from: process.env.EMAIL,
 			to: mail,
@@ -36,8 +37,20 @@ const passwordResetMail = async (mail: string, id: string) => {
 	await sendMail(
 		mail,
 		"Password reset request",
-		`Password reset link:\n${token.getDataValue("tokenHash")}`
+		`Password reset link:\n${
+			process.env.FRONT_END
+		}/resetPassword/${token.getDataValue("tokenHash")}`
 	);
 };
 
-export default { passwordResetMail };
+const resetPassword = async (id: string, token: string, password: string) => {
+	const resetToken = await Token.findOne({
+		where: { tokenHash: token, userId: id },
+	});
+	if (!resetToken) {
+		throw new BadRequest("This token doesn't exist");
+	}
+	return userController.resetUserPassword(id, password);
+};
+
+export default { passwordResetMail, resetPassword };

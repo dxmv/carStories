@@ -18,3 +18,22 @@ router.patch(
 		}
 	}
 );
+
+// RESET PASSWORD
+router.patch(
+	"/resetPassword",
+	passport.authenticate("jwt", { session: false }),
+	async (req, res, next) => {
+		try {
+			const user: any = req.user;
+			const newUser = await authController.resetPassword(
+				user.userId,
+				req.body.token,
+				req.body.password
+			);
+			res.status(202).json(newUser);
+		} catch (e) {
+			next(e);
+		}
+	}
+);

@@ -24,7 +24,7 @@ sequelize
 	.authenticate()
 	.then(() => console.log("Database connected"))
 	.catch(e => console.log(e));
-sequelize.sync({ force: true }).then(() => console.log("Created database"));
+// sequelize.sync({ force: true }).then(() => console.log("Created database"));
 relationships();
 
 // Body parser
