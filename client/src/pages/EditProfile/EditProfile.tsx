@@ -4,6 +4,7 @@ import { AiOutlineMail, AiOutlineUser } from "react-icons/ai";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { useChangeUserInfoMutation } from "../../redux/api/userSlice";
 import { setUser as setUserRedux } from "../../redux/userSlice";
+import SendMail from "./SendMail";
 
 interface EditProfileUser {
 	username: string;
@@ -139,14 +140,7 @@ export default function EditProfile() {
 						Edit user
 					</button>
 				</div>
-				<div>
-					<p className="font-bold text-2xl border-b-2 mb-4 pb-2">
-						Reset password
-					</p>
-					<button className="bg-blue-500 p-2 rounded-md">
-						Click here to reset your password
-					</button>
-				</div>
+				<SendMail />
 			</div>
 		</div>
 	);
