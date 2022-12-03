@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "./redux/userSlice";
 import { useLazyGetCurrentUserQuery } from "./redux/api/userSlice";
 import EditProfile from "./pages/EditProfile/EditProfile";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
 
 const router = createBrowserRouter([
 	{
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
 				<EditProfile />
 			</>
 		),
+	},
+	{
+		path: "/reset_password/:token",
+		element: <ResetPassword />,
 	},
 ]);
 

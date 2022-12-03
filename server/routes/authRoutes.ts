@@ -29,7 +29,8 @@ router.patch(
 			const newUser = await authController.resetPassword(
 				user.userId,
 				req.body.token,
-				req.body.password
+				req.body.password,
+				req.body.oldPassword
 			);
 			res.status(202).json(newUser);
 		} catch (e) {

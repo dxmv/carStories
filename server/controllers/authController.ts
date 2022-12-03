@@ -32,25 +32,30 @@ const sendMail = async (mail: string, subject: string, text: string) => {
 const passwordResetMail = async (mail: string, id: string) => {
 	const token = await Token.create({
 		userId: id,
-		tokenHash: await bcrypt.hash(`${mail}-${id}`, 10),
+		tokenHash: await (await bcrypt.hash(`${mail}-${id}`, 10)).replace("/", ""),
 	});
 	await sendMail(
 		mail,
 		"Password reset request",
 		`Password reset link:\n${
 			process.env.FRONT_END
-		}/resetPassword/${token.getDataValue("tokenHash")}`
+		}/reset_password/${token.getDataValue("tokenHash")}`
 	);
 };
 
-const resetPassword = async (id: string, token: string, password: string) => {
+const resetPassword = async (
+	id: string,
+	token: string,
+	password: string,
+	oldPassword: string
+) => {
 	const resetToken = await Token.findOne({
 		where: { tokenHash: token, userId: id },
 	});
 	if (!resetToken) {
 		throw new BadRequest("This token doesn't exist");
 	}
-	return userController.resetUserPassword(id, password);
+	return userController.resetUserPassword(id, password, oldPassword);
 };
 
 export default { passwordResetMail, resetPassword };

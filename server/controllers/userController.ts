@@ -47,7 +47,7 @@ const createUser = async (
 		throw new BadRequest("Invalid mail");
 	}
 
-	const newPassword = await bcrypt.hash(password, 10);
+	const newPassword = await bcrypt.hash(password, process.env.SALT || 10);
 	let newUser;
 	if (image) {
 		newUser = await User.create({
@@ -112,10 +112,19 @@ const followUser = async (userId: string, followID: string) => {
 	return await getUserById(userId);
 };
 
-const resetUserPassword = async (id: string, password: string) => {
+const resetUserPassword = async (
+	id: string,
+	password: string,
+	oldPassword: string
+) => {
 	const user = await User.findByPk(id);
 	if (!user) {
 		throw new NotFound();
+	}
+	if (
+		await !bcrypt.compare(oldPassword, await user?.getDataValue("password"))
+	) {
+		throw new BadRequest("The old password doesn't match");
 	}
 	await user.setDataValue("password", await bcrypt.hash(password, 10));
 	await user.save();
