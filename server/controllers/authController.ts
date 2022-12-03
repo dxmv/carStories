@@ -55,7 +55,13 @@ const resetPassword = async (
 	if (!resetToken) {
 		throw new BadRequest("This token doesn't exist");
 	}
-	return userController.resetUserPassword(id, password, oldPassword);
+	const user = await userController.resetUserPassword(
+		id,
+		password,
+		oldPassword
+	);
+	await resetToken.destroy();
+	return user;
 };
 
 export default { passwordResetMail, resetPassword };

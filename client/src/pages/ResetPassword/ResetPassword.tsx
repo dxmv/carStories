@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Field from "../../components/AccountField/Field";
 import { BsFillKeyFill } from "react-icons/bs";
 import { AiFillLock } from "react-icons/ai";
 import { useResetPasswordMutation } from "../../redux/api/authSlice";
+import { logoutUser } from "../../redux/userSlice";
 
 interface NewUser {
 	old: string;
@@ -32,6 +33,7 @@ export default function ResetPassword() {
 	});
 	const [trigger] = useResetPasswordMutation();
 	const { token } = useParams();
+	const navigate = useNavigate();
 
 	const setOld = (value: string) => {
 		setNewUser(prev => ({
@@ -71,7 +73,7 @@ export default function ResetPassword() {
 	const setNewConfirmErr = (value: string) => {
 		setError(prev => ({
 			...prev,
-			new: value,
+			newConfirm: value,
 		}));
 	};
 
@@ -96,11 +98,13 @@ export default function ResetPassword() {
 	const handleSubmit = async () => {
 		if (newUser.newConfirm !== newUser.new) {
 			setNewConfirmErr("This password must match with the new one");
+			return;
 		} else {
-			setNewConfirmErr("This password must match with the new one");
+			setNewConfirmErr("");
 		}
 		if (newUser.new === newUser.old) {
 			setNewErr("This password must differ from the old one");
+			return;
 		} else {
 			setNewErr("");
 		}
@@ -109,7 +113,9 @@ export default function ResetPassword() {
 				token: token || "",
 				password: newUser.new,
 				oldPassword: newUser.old,
-			});
+			}).unwrap();
+			await logoutUser();
+			navigate("/login");
 		} catch (e: unknown) {
 			const message = (e as Error).message;
 			setError(prev => ({ ...prev, form: message }));
