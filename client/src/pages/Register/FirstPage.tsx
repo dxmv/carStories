@@ -61,21 +61,20 @@ export default function FirstPage({
 		if (e.target.value === "") {
 			return;
 		}
-		const res = /^[a-z0-9_.]{3,15}$/.exec(e.target.value);
-		if (res) {
-			setUser(prev => {
-				return { ...prev, username: e.target.value };
-			});
-			setError(prev => {
-				return { ...prev, usernameError: "" };
-			});
+		if (e.target.value.length < 4 || e.target.value.length > 16) {
+			setError(prev => ({
+				...prev,
+				usernameError: "Username must be between 4 and 16 characters",
+			}));
 		} else {
-			setError(prev => {
-				return {
-					...prev,
-					usernameError: "Username must be between 3 and 16 characters",
-				};
-			});
+			setUser(prev => ({
+				...prev,
+				username: e.target.value,
+			}));
+			setError(prev => ({
+				...prev,
+				usernameError: "",
+			}));
 		}
 	};
 

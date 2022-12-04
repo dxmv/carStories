@@ -30,16 +30,7 @@ export const userApi = apiSlice.injectEndpoints({
 			}),
 		}),
 		// Mutations
-		registerUser: build.mutation<
-			User,
-			{
-				username: string;
-				email: string;
-				image: string;
-				password: string;
-				bio: string;
-			}
-		>({
+		createUser: build.mutation<User, FormData>({
 			query: body => ({
 				url: "/users/",
 				method: "POST",
@@ -82,4 +73,5 @@ export const {
 	useFollowUserMutation,
 	useChangeUserInfoMutation,
 	useGetAllUsersQuery,
+	useCreateUserMutation,
 } = userApi;

@@ -47,7 +47,7 @@ const createUser = async (
 		throw new BadRequest("Invalid mail");
 	}
 
-	const newPassword = await bcrypt.hash(password, process.env.SALT || 10);
+	const newPassword = await bcrypt.hash(password, 10);
 	let newUser;
 	if (image) {
 		newUser = await User.create({

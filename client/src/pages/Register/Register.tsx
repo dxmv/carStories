@@ -4,6 +4,7 @@ import FirstPage from "./FirstPage";
 import SecondPage from "./SecondPage";
 import ThirdPage from "./ThirdPage";
 import { RegisterState } from "./registerTypes";
+import { useCreateUserMutation } from "../../redux/api/userSlice";
 
 export default function Register() {
 	const [page, setPage] = useState<number>(1);
@@ -14,6 +15,7 @@ export default function Register() {
 		bio: "",
 		image: null,
 	});
+	const [trigger] = useCreateUserMutation();
 
 	const nextPage = () => {
 		if (page === 3) {
@@ -29,10 +31,19 @@ export default function Register() {
 		setPage(prev => prev - 1);
 	};
 
-	const handleSubmit = () => {
-		// if(user.image===null){
-		// }
-		// Register user
+	const handleSubmit = async () => {
+		try {
+			console.log("Alo");
+			const formData = new FormData();
+			formData.append("username", user.username);
+			formData.append("password", user.password);
+			formData.append("email", user.email);
+			formData.append("bio", user.bio);
+			formData.append("image", user.image || "");
+			await trigger(formData);
+		} catch (e) {
+			console.log(e);
+		}
 	};
 
 	return (

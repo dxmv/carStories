@@ -39,12 +39,13 @@ export default function Search() {
 		<div className="w-1/6 relative overflow-visible">
 			<Field
 				type="text"
-				icon={<AiOutlineSearch className="absolute top-2 left-2" size={32} />}
+				icon={<AiOutlineSearch className="absolute top-2 left-2" size={24} />}
 				placeholder="Search"
 				error=""
 				value={searchValue}
 				setValue={handleSearch}
-				className="w-full relative h-full"
+				className="w-full relative h-10"
+				inputClassName="h-full"
 			/>
 			{searchValue !== "" && (
 				<div
