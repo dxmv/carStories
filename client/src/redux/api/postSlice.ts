@@ -47,4 +47,5 @@ export const {
 	useLikePostMutation,
 	useCreatePostMutation,
 	useDeletePostMutation,
+	useChangeCaptionMutation,
 } = postSlice;

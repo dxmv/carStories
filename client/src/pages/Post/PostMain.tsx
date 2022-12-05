@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import DarkOverlay from "../../components/DarkOverlay/DarkOverlay";
-import { AiTwotoneDelete, AiTwotoneEdit } from "react-icons/ai";
+import { AiTwotoneDelete } from "react-icons/ai";
 import { USER_IMAGE_PATH } from "../../utils/backendURLS";
 import { Post } from "../../types";
 import { useAppSelector } from "../../hooks";
@@ -44,7 +44,6 @@ export default function PostMain({ data }: { data: Post }) {
 						<DarkOverlay
 							body={
 								<>
-									<AiTwotoneEdit size={48} color="white" className="mr-4" />
 									<AiTwotoneDelete
 										size={48}
 										color="white"
