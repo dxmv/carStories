@@ -13,42 +13,59 @@ import { setUser } from "./redux/userSlice";
 import { useLazyGetCurrentUserQuery } from "./redux/api/userSlice";
 import EditProfile from "./pages/EditProfile/EditProfile";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
 	{
 		path: "/",
 		element: (
-			<>
-				<Nav />
-				<Home />
-			</>
+			<PrivateRoute
+				component={
+					<>
+						<Nav />
+						<Home />
+					</>
+				}
+			/>
 		),
 	},
 	{
 		path: "/posts/:id",
 		element: (
-			<>
-				<Nav />
-				<PostPage />
-			</>
+			<PrivateRoute
+				component={
+					<>
+						<Nav />
+						<PostPage />
+					</>
+				}
+			/>
 		),
 	},
 	{
 		path: "/new_post",
 		element: (
-			<>
-				<Nav />
-				<NewPost />
-			</>
+			<PrivateRoute
+				component={
+					<>
+						<Nav />
+						<NewPost />
+					</>
+				}
+			/>
 		),
 	},
 	{
 		path: "/users/:id",
 		element: (
-			<>
-				<Nav />
-				<Profile />
-			</>
+			<PrivateRoute
+				component={
+					<>
+						<Nav />
+						<Profile />
+					</>
+				}
+			/>
 		),
 	},
 	{
@@ -62,15 +79,19 @@ const router = createBrowserRouter([
 	{
 		path: "/edit_user",
 		element: (
-			<>
-				<Nav />
-				<EditProfile />
-			</>
+			<PrivateRoute
+				component={
+					<>
+						<Nav />
+						<EditProfile />
+					</>
+				}
+			/>
 		),
 	},
 	{
 		path: "/reset_password/:token",
-		element: <ResetPassword />,
+		element: <PrivateRoute component={<ResetPassword />} />,
 	},
 ]);
 
