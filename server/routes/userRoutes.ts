@@ -25,7 +25,6 @@ router.get(
 	async (req, res, next) => {
 		try {
 			const current: any = req.user;
-			console.log(req.user + "\n\n\n\n\n");
 			const user = await userController.getUserById(current.userId);
 			if (user) {
 				res.status(200).json(user);

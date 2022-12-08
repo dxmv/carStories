@@ -1,10 +1,12 @@
 import nodemailer from "nodemailer";
-import { BadRequest, HttpError, NotFound } from "../error/HttpError";
+import { BadRequest, HttpError } from "../error/HttpError";
 import Token from "../models/Token";
 import bcrypt from "bcrypt";
-import User from "../models/User";
 import userController from "./userController";
 
+// Functions for the auth route
+
+// Sending a mail with gmail using nodemailer
 const sendMail = async (mail: string, subject: string, text: string) => {
 	const transporter = nodemailer.createTransport({
 		service: "gmail",

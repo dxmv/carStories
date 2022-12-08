@@ -2,28 +2,25 @@ import User, { Follow } from "../models/User";
 import bcrypt from "bcrypt";
 import { BadRequest, NotFound } from "../error/HttpError";
 
+// Functions for the user route
+
+const GET_PARAMS: string[] = [
+	"followedBy",
+	"following",
+	"posts",
+	"comments",
+	"likedPosts",
+	"likedComments",
+];
+
 const getAllUsers = async () =>
 	await User.findAll({
-		include: [
-			"followedBy",
-			"following",
-			"posts",
-			"comments",
-			"likedPosts",
-			"likedComments",
-		],
+		include: GET_PARAMS,
 	});
 
 const getUserById = async (id: string) =>
 	await User.findByPk(id, {
-		include: [
-			"followedBy",
-			"following",
-			"posts",
-			"comments",
-			"likedPosts",
-			"likedComments",
-		],
+		include: GET_PARAMS,
 	});
 
 const createUser = async (
@@ -33,6 +30,7 @@ const createUser = async (
 	bio: string,
 	image?: string
 ) => {
+	// Verify the given params
 	if (username.length <= 4 || username.length >= 20) {
 		throw new BadRequest("Username length has to be between 4 and 20");
 	}
@@ -74,6 +72,7 @@ const editUser = async (
 	email: string,
 	bio: string
 ) => {
+	// Verify the given params
 	if (username.length <= 4 || username.length >= 20) {
 		throw new BadRequest("Username length has to be between 4 and 20");
 	}
@@ -86,17 +85,23 @@ const editUser = async (
 	}
 
 	const current = await User.findByPk(id);
-	await current?.setDataValue("username", username);
-	await current?.setDataValue("email", email);
-	await current?.setDataValue("bio", bio);
-	await current?.save();
+	if (!current) {
+		throw new BadRequest("The user doesn't exist");
+	}
+	await current.setDataValue("username", username);
+	await current.setDataValue("email", email);
+	await current.setDataValue("bio", bio);
+	await current.save();
 	return current;
 };
 
 const editProfilePicture = async (id: string, filename: string) => {
 	const user = await User.findByPk(id);
-	await user?.setDataValue("image", filename);
-	await user?.save();
+	if (!user) {
+		throw new BadRequest("The user doesn't exist");
+	}
+	await user.setDataValue("image", filename);
+	await user.save();
 	return getUserById(id);
 };
 
@@ -119,7 +124,7 @@ const resetUserPassword = async (
 ) => {
 	const user = await User.findByPk(id);
 	if (!user) {
-		throw new NotFound();
+		throw new BadRequest("The user doesn't exist");
 	}
 	if (
 		await !bcrypt.compare(oldPassword, await user?.getDataValue("password"))

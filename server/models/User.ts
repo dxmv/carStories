@@ -1,6 +1,8 @@
 import sequelize from "../database/connection";
 const { DataTypes } = require("sequelize");
 
+// User, follow and likes models
+
 const User = sequelize.define(
 	"User",
 	{

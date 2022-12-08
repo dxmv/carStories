@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { HttpError } from "./HttpError";
 
+// This is the function that is called if an error is caught in the routes
+
 export const errorHandle = (
 	err: Error,
 	req: Request,

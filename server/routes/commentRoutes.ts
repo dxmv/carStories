@@ -44,7 +44,7 @@ router.post(
 	}
 );
 
-// CHANGE TEXT
+// CHANGE CAPTION
 router.patch(
 	"/:id",
 	passport.authenticate("jwt", { session: false }),

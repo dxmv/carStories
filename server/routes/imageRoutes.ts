@@ -4,6 +4,7 @@ import fs from "fs";
 export const router = express.Router();
 const MAIN_PATH = "D:\\JAVA SCRIPT PROJECTS\\Instagram Clone\\server\\images";
 
+// Route for getting an image on frontend, works for all images in a MAIN_PATH
 router.get("/:path/:image_id", async (req, res, next) => {
 	const path = `${MAIN_PATH}\\${req.params.path}\\${req.params.image_id}`;
 	try {

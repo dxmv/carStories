@@ -15,6 +15,7 @@ passport.use(
 			const currentUser = await User.findOne({
 				where: { userId: jwt_payload.id },
 			});
+			// Checking if jwt user is valid
 			if (currentUser) {
 				const temp: any = currentUser;
 				return done(null, temp.dataValues);

@@ -1,5 +1,7 @@
 import multer from "multer";
 
+// Storage with multer, used for uploading pictures
+
 export const profilePicturesStorage = multer.diskStorage({
 	destination(req, file, callback) {
 		callback(null, "./images/profilePictures");

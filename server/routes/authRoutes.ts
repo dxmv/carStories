@@ -1,7 +1,6 @@
 import express from "express";
 import authController from "../controllers/authController";
 import passport from "passport";
-
 export const router = express.Router();
 
 // SEND MAIL

@@ -16,10 +16,6 @@ const Post = sequelize.define(
 		caption: {
 			type: DataTypes.STRING,
 		},
-		// userId: {
-		// 	type: DataTypes.INTEGER,
-		// 	allowNull: false,
-		// },
 	},
 	{
 		freezeTableName: true,

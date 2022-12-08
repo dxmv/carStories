@@ -1,6 +1,8 @@
 import sequelize from "../database/connection";
 const { DataTypes } = require("sequelize");
 
+// Comment and Comment Likes models
+
 const Comment = sequelize.define(
 	"Comment",
 	{
