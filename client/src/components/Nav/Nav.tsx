@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import { AiFillHome } from "react-icons/ai";
 import { MdAddBox } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { openDropdown, closeDropDown } from "../../redux/navSlice";
 import { USER_IMAGE_PATH } from "../../utils/backendURLS";
 import ProfileDropdown from "./ProfileDropdown";
 import Search from "./Search";
 
 export default function Nav() {
-	const [open, setOpen] = useState<boolean>(false);
+	const dropDownOpen = useAppSelector(state => state.nav.dropdownOpen);
 	const user = useAppSelector(state => state.user.user);
+	const dispatch = useAppDispatch();
 
 	const handleOpen = () => {
-		setOpen(prev => !prev);
+		dispatch(dropDownOpen ? closeDropDown() : openDropdown());
 	};
 
 	return (
@@ -35,7 +37,7 @@ export default function Nav() {
 					alt="User"
 					onClick={handleOpen}
 				/>
-				{open && <ProfileDropdown />}
+				{dropDownOpen && <ProfileDropdown />}
 			</div>
 		</div>
 	);
