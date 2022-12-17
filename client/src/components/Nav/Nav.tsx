@@ -32,7 +32,7 @@ export default function Nav() {
 					<MdAddBox size={32} className="mr-6" />
 				</Link>
 				<img
-					className="rounded-full w-8 h-8 bg-black"
+					className="rounded-full w-8 h-8 bg-black border-2"
 					src={`${USER_IMAGE_PATH}/${user?.image}`}
 					alt="User"
 					onClick={handleOpen}

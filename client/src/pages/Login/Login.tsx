@@ -1,10 +1,15 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Field from "../../components/AccountField/Field";
 import { BsFillKeyFill } from "react-icons/bs";
 import { AiOutlineUser } from "react-icons/ai";
-import { useLoginMutation } from "../../redux/api/userSlice";
+import {
+	useLazyGetCurrentUserQuery,
+	useLoginMutation,
+} from "../../redux/api/userSlice";
 import { setToken } from "../../utils/jwtTokenHandle";
+import { useAppDispatch } from "../../hooks";
+import { setUser as setUserRedux } from "../../redux/userSlice";
 
 interface LoginState {
 	username: string;
@@ -24,7 +29,10 @@ export default function Login() {
 		passwordError: "",
 		formError: "",
 	});
-	const [login, loginResult] = useLoginMutation();
+	const [login] = useLoginMutation();
+	const [trigger] = useLazyGetCurrentUserQuery();
+	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
 
 	const setUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.value === "") {
@@ -78,35 +86,24 @@ export default function Login() {
 		if (error.usernameError !== "" || error.passwordError !== "") {
 			return;
 		}
-		await login(user);
-		if (loginResult.isError) {
-			setError(prev => {
-				const err: any = loginResult.error;
-				return {
-					...prev,
-					formError: err.data.message,
-				};
-			});
-			return;
-		}
-		if (loginResult.isUninitialized) {
-			setError(prev => {
-				return {
-					...prev,
-					formError: "There was an error, please try again",
-				};
-			});
-			return;
-		}
-		if (loginResult.data) {
-			setToken(loginResult.data.token);
+		try {
+			const res = await login(user).unwrap();
+			await setToken(res.token);
+			const r = await trigger();
+			if (r.data) {
+				dispatch(setUserRedux(r.data));
+			}
+			navigate("/");
+		} catch (e) {
+			console.log(e);
 		}
 	};
 
 	return (
 		<div className="w-screen h-screen overflow-hidden flex justify-center items-center">
 			<div className="flex flex-col items-center w-1/5 p-6 shadow-lg rounded-lg border-2  border-lighterOrange m-12">
-				<h1 className="mb-1 font-bold text-3xl">LOGO</h1>
+				<h1 className="mb-3 font-bold text-3xl">LOGO</h1>
+				<h1 className="mb-1 font-bold text-xl">Login</h1>
 				<p className="mb-6" style={{ color: "red" }}>
 					{error.formError}
 				</p>
@@ -138,9 +135,6 @@ export default function Login() {
 						Sign up here
 					</Link>
 				</p>
-				<Link to="/register" className="text-darkerOrange text-sm mt-6">
-					Forgot password?
-				</Link>
 			</div>
 		</div>
 	);

@@ -5,7 +5,7 @@
 // If not: they are redirected to the login page.
 
 import React from "react";
-import Login from "../../pages/Login/Login";
+import { useNavigate } from "react-router-dom";
 import { getToken } from "../../utils/jwtTokenHandle";
 
 export default function PrivateRoute({
@@ -13,10 +13,11 @@ export default function PrivateRoute({
 }: {
 	component: React.ReactElement<any, any>;
 }) {
-	const token = getToken();
+	const user = getToken();
+	const navigate = useNavigate();
 
-	if (!token) {
-		return <Login />;
+	if (!user) {
+		navigate("/login");
 	}
 
 	return component;

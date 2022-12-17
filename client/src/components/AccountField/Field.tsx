@@ -25,10 +25,7 @@ export default function Field({
 				type={type}
 				className={`border-2 rounded-lg text-lg p-2 w-full pl-10 shadow-md ${
 					inputClassName && inputClassName
-				}`}
-				style={{
-					borderColor: error !== "" ? "red" : "black",
-				}}
+				} ${error !== "" && "border-rose-400"}`}
 				placeholder={placeholder}
 				defaultValue={value}
 				onChange={setValue}

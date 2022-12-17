@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { AiFillCamera, AiFillPicture } from "react-icons/ai";
 import ImageField from "../../components/AccountField/ImageField";
+import FormButton from "../../components/FormButton/FormButton";
 import { RegisterState } from "./registerTypes";
 
 export default function ThirdPage({
@@ -46,18 +47,18 @@ export default function ThirdPage({
 			<ImageField value={user.image} handleUpload={handleUpload} />
 			<p className="text-red-600 text-center mb-6">{error}</p>
 
-			<button
-				className="mb-6 bg-orange-400 w-1/4 p-3 font-bold text-white rounded-lg text-lg"
-				onClick={handleFinish}
-			>
-				FINISH
-			</button>
-			<button
-				className="mb-6 bg-orange-400 w-1/4 p-3 font-bold text-white rounded-lg text-lg"
-				onClick={prevPage}
-			>
-				BACK
-			</button>
+			<div className="flex flex-row-reverse justify-around w-4/5 ">
+				<FormButton
+					text="FINISH"
+					handleClick={handleFinish}
+					className=" bg-orange-400 w-2/6 text-white"
+				/>
+				<FormButton
+					text="BACK"
+					handleClick={prevPage}
+					className=" bg-orange-400 w-2/6 text-white "
+				/>
+			</div>
 		</>
 	);
 }

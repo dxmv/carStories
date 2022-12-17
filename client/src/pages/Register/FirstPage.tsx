@@ -3,6 +3,7 @@ import Field from "../../components/AccountField/Field";
 import { BsFillKeyFill } from "react-icons/bs";
 import { AiOutlineMail, AiOutlineUser } from "react-icons/ai";
 import { RegisterState } from "./registerTypes";
+import FormButton from "../../components/FormButton/FormButton";
 
 interface ErrorState {
 	usernameError: string;
@@ -26,7 +27,6 @@ export default function FirstPage({
 	});
 
 	const nextPage = async () => {
-		console.log(user);
 		if (user.username === "") {
 			await setError(prev => {
 				return { ...prev, usernameError: "Username must not be empty" };
@@ -45,7 +45,6 @@ export default function FirstPage({
 			});
 			return;
 		}
-		console.log(error);
 		if (
 			error.usernameError !== "" ||
 			error.emailError !== "" ||
@@ -149,12 +148,11 @@ export default function FirstPage({
 				error={error.passwordError}
 				setValue={setPassword}
 			/>
-			<button
-				className="mb-6 bg-orange-400 w-1/4 p-3 font-bold text-white rounded-lg text-lg"
-				onClick={nextPage}
-			>
-				NEXT
-			</button>
+			<FormButton
+				text="NEXT"
+				handleClick={nextPage}
+				className=" bg-orange-400 w-1/4 text-white"
+			/>
 		</>
 	);
 }

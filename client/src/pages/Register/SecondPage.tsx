@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import FormButton from "../../components/FormButton/FormButton";
 import { RegisterState } from "./registerTypes";
 
 export default function SecondPage({
@@ -48,18 +49,18 @@ export default function SecondPage({
 				onChange={handleChange}
 			/>
 			<p className="text-red-600 mb-6">{error}</p>
-			<button
-				className="mb-6 bg-orange-400 w-1/4 p-3 font-bold text-white rounded-lg text-lg"
-				onClick={handleNext}
-			>
-				NEXT
-			</button>
-			<button
-				className="mb-6 bg-orange-400 w-1/4 p-3 font-bold text-white rounded-lg text-lg"
-				onClick={prevPage}
-			>
-				PREVIOUS
-			</button>
+			<div className="flex flex-row-reverse justify-around w-4/5 ">
+				<FormButton
+					text="NEXT"
+					handleClick={handleNext}
+					className=" bg-orange-400 w-1/5 text-white"
+				/>
+				<FormButton
+					text="BACK"
+					handleClick={prevPage}
+					className=" bg-orange-400 w-1/5 text-white "
+				/>
+			</div>
 		</>
 	);
 }

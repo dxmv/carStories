@@ -33,7 +33,6 @@ export default function Register() {
 
 	const handleSubmit = async () => {
 		try {
-			console.log("Alo");
 			const formData = new FormData();
 			formData.append("username", user.username);
 			formData.append("password", user.password);
@@ -49,7 +48,8 @@ export default function Register() {
 	return (
 		<div className="w-screen h-screen overflow-hidden flex justify-center items-center">
 			<div className="flex flex-col items-center w-1/5  p-6 shadow-xl rounded-lg border-2">
-				<h1 className="mb-3 font-bold text-3xl">Sign up</h1>
+				<h1 className="mb-3 font-bold text-3xl">Logo</h1>
+				<h1 className="mb-3 font-bold text-xl">Sign up</h1>
 				<div
 					id="progress-bar"
 					className="w-4/5 h-1 mb-6 rounded-lg bg-gray-600 relative"
